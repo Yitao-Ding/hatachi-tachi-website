@@ -1,34 +1,51 @@
 @import "tailwindcss";
 
 /* =========================================================
-   ハタチたち — design tokens (Canva 草案 DAHTaN6Dxr8 由来)
-   正確な HEX は素材受領後に差し替える (このファイルの :root だけ触れば全体に効く)
+   ハタチたち — design tokens
+   色は Canva 草案 (DAHTaN6Dxr8) のスクリーンショットから
+   ピクセル単位で抽出した実測値。目視合わせではない。
    ========================================================= */
 
 @theme inline {
   --color-coral: var(--coral);
-  --color-coral-deep: var(--coral-deep);
+  --color-coral-ink: var(--coral-ink);
   --color-navy: var(--navy);
   --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
   --color-paper: var(--paper);
-  --color-paper-soft: var(--paper-soft);
+  --color-paper-warm: var(--paper-warm);
 
   --font-mincho: var(--ff-mincho);
+  --font-roman: var(--ff-roman);
   --font-sans: var(--ff-sans);
 }
 
 :root {
-  --coral: #f1554f;
-  --coral-deep: #d94540;
-  --navy: #22409a;
+  /* 実測値。ABOUT背景・LOCK BACK背景・フッター・ヒーローのレタリングは全て同一の赤 */
+  --coral: #ff5757;
+  --navy: #1f469d;
   --ink: #1f2430;
   --paper: #ffffff;
-  --paper-soft: #f7f3ee;
+  --paper-warm: #f7f3ec;
+
+  /* 白文字 on --coral は 3.11:1 で WCAG AA 本文基準 (4.5:1) に届かない。
+     ブランド色を優先し、珊瑚背景の文字は必ず大文字基準 (3:1) を満たすサイズにする方針。
+     完全準拠に倒す場合は --coral を #cf4646 (白と 4.55:1) に変えるだけで全体に効く。 */
+  --coral-ink: #ffffff;
+
+  /* 白背景に小さい珊瑚文字を置くと 3.11:1 で落ちるため、本文サイズの珊瑚文字は使わない。
+     どうしても必要な箇所はこの濃い方を使う (白と 4.55:1)。 */
+  --coral-deep: #cf4646;
+
+  --ink-muted: #4a5160; /* 白背景で 8.0:1。text-ink/60 (4.2:1) の置き換え */
 
   --container: min(1120px, 92vw);
   --section-pad-y: clamp(56px, 8vw, 112px);
 
-  --ff-mincho: var(--font-shippori), "Hiragino Mincho ProN", serif;
+  /* next/font の変数は <html> に付与している (body に付けると :root で解決できず
+     このチェーンが丸ごと無効化され、明朝が一切適用されなくなる) */
+  --ff-mincho: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --ff-roman: var(--font-cormorant), "Hiragino Mincho ProN", serif;
   --ff-sans: var(--font-noto-jp), system-ui, sans-serif;
 }
 
@@ -57,16 +74,53 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* 縦書き (装飾テキスト限定。長文には使わない) */
+/* 中央寄せコンテナの中にいる要素を画面端まで裁ち落とす。
+   草案の ABOUT は写真が左右の画面端まではみ出す非対称構成になっている。 */
+.bleed-right {
+  margin-right: calc((var(--container) - 100vw) / 2);
+}
+.bleed-left {
+  margin-left: calc((var(--container) - 100vw) / 2);
+}
+
+/* 装飾用の縦書き。折返しが必要な長文には使わない (Safari で行高が揃わない)。
+   縦組みでは行の折返し方向が横なので、nowrap を入れないと
+   高さが足りないときに2列3列に割れる。 */
 .vertical-text {
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  letter-spacing: 0.35em;
   font-feature-settings: "vpal";
+  white-space: nowrap;
+}
+
+/* microCMS リッチエディタ本文。サニタイズ後の HTML にだけ適用する */
+.news-body :where(p) {
+  margin-top: 1.4em;
+}
+.news-body :where(h2) {
+  font-family: var(--ff-mincho);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 2.4em;
+}
+.news-body :where(a) {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.news-body :where(img) {
+  width: 100%;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

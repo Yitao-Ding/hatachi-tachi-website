@@ -1,52 +1,81 @@
 import { HERO } from "@/content/site";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
-import { VerticalText } from "@/components/ui/vertical-text";
 
-// ヒーロー: コラージュ背景 + 円陣写真 + 赤の「ハタチたち」レタリング。
-// レタリングは Canva からの画像書き出し (透過PNG) 受領後に画像へ差し替える。
-// 背景写真・円陣写真も同様 (/public/assets/hero-*.webp)。
+/*
+ * 草案 (hc-000.png) の実測比率。キャンバス幅 1151px を 100% とする:
+ *   円陣写真      左 15.3% 〜 右 84.7% (幅 69.3%、比率 2.70:1)
+ *   「ハタチ」     左 18.2% から
+ *   「たち」       右端が 84.7% (写真の右端に揃う)
+ *   左右の縦書き   左右 6% の位置
+ * 単純な横並びにすると写真が両端まで広がって、草案のコラージュ的な余白が消える。
+ *
+ * 左右の縦書きは繋げて1文になる: ここからは私たちがつくる →「最強セカイ」
+ * レタリングは装飾なので aria-hidden。読み上げと検索には sr-only の h1 を使う。
+ */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-paper-soft">
-      {/* 白飛ばしした写真コラージュ背景 */}
-      <div className="absolute inset-0 grid grid-cols-3 gap-2 opacity-25" aria-hidden>
+    <section className="relative overflow-hidden bg-paper-warm">
+      {/* 背景コラージュ。継ぎ目を出さないため gap は入れない。
+          右の白い縦書きはこの写真の濃淡に乗って読ませる想定なので、
+          白飛ばしはするが完全には飛ばしきらない */}
+      <div className="absolute inset-0 grid grid-cols-3 grid-rows-2" aria-hidden>
         {Array.from({ length: 6 }).map((_, i) => (
-          <PlaceholderImage key={i} label="" className="h-full min-h-40" />
+          <PlaceholderImage key={i} className="h-full w-full grayscale" />
         ))}
       </div>
-      <div className="absolute inset-0 bg-white/55" aria-hidden />
+      <div className="bg-paper-warm/60 absolute inset-0" aria-hidden />
 
-      <div className="relative mx-auto flex min-h-[92svh] w-[var(--container)] flex-col justify-center py-16">
-        {/* タイトル上段 */}
-        <p className="font-mincho text-coral select-none text-[clamp(64px,12vw,150px)] font-bold leading-none tracking-[0.18em]">
-          ハタチ
+      <h1 className="sr-only">
+        ハタチたち｜二十歳100人でつくるダンス映像プロジェクト
+      </h1>
+
+      <div className="relative mx-auto w-[var(--container)] py-[clamp(36px,6vw,76px)]">
+        <p
+          className="font-mincho text-coral text-[clamp(56px,10.5vw,124px)] leading-[0.95] font-bold tracking-[0.12em] md:ml-[18.2%]"
+          aria-hidden
+        >
+          {HERO.titleUpper}
         </p>
 
-        <div className="relative mt-4 flex items-stretch gap-4 md:gap-8">
-          {/* 左: 縦書きキャッチ */}
-          <VerticalText className="font-mincho text-coral inline-block shrink-0 self-center text-xl font-bold md:text-3xl">
-            {`「${HERO.catchVertical}」`}
-          </VerticalText>
-
-          {/* 中央: 円陣写真 */}
-          <figure className="relative aspect-[16/10] w-full overflow-hidden border-4 border-white shadow-xl">
-            <PlaceholderImage label="円陣写真 (hero-circle)" className="h-full w-full" />
+        <div className="relative mt-[clamp(8px,1.5vw,20px)]">
+          {/* 草案の円陣写真は 約2.70:1 の横長。白フチ・影は付けない。
+              モバイルでその比率だと細い帯になって何も見えないので 3:2 に寄せる */}
+          <figure className="relative aspect-[3/2] w-full overflow-hidden md:mx-auto md:aspect-[270/100] md:w-[69.3%]">
+            <PlaceholderImage
+              label="円陣写真 (hero-circle)"
+              className="h-full w-full"
+            />
           </figure>
 
-          {/* 右: 縦書きリード */}
-          <VerticalText className="font-mincho text-coral hidden shrink-0 self-start text-lg font-semibold md:inline-block md:text-2xl">
+          <p
+            className="vertical-text font-mincho text-coral absolute top-1/2 left-0 hidden -translate-y-1/2 font-bold tracking-[0.3em] md:block md:text-2xl"
+            aria-hidden
+          >
+            {HERO.catchVertical}
+          </p>
+
+          <p
+            className="vertical-text font-mincho absolute top-0 right-0 hidden font-semibold tracking-[0.3em] text-white md:block md:text-xl"
+            aria-hidden
+          >
             {HERO.leadVertical}
-          </VerticalText>
+          </p>
         </div>
 
-        {/* タイトル下段 */}
-        <p className="font-mincho text-coral select-none self-end text-[clamp(56px,10vw,130px)] font-bold leading-none tracking-[0.4em]">
-          たち
+        <p
+          className="font-mincho text-coral mt-[clamp(4px,1vw,12px)] text-right text-[clamp(48px,9vw,112px)] leading-[0.95] font-bold tracking-[0.3em] md:mr-[15.3%]"
+          aria-hidden
+        >
+          {HERO.titleLower}
         </p>
 
-        {/* モバイルではリードを横書きで下に */}
-        <p className="font-mincho text-coral mt-6 text-base font-semibold tracking-[0.2em] md:hidden">
+        {/* モバイルは縦書きが写真を潰すので、左右の縦書きを1文に戻して横書きで置く */}
+        <p
+          className="font-mincho text-coral mt-4 text-[15px] font-semibold tracking-[0.16em] md:hidden"
+          aria-hidden
+        >
           {HERO.leadVertical}
+          {HERO.catchVertical}
         </p>
       </div>
     </section>

@@ -1,37 +1,76 @@
-import { ABOUT_HEADING, ABOUT_SUB } from "@/content/site";
+import { ABOUT_HEADING, ABOUT_SUB, SECTION_LABELS } from "@/content/site";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 
+/*
+ * 草案 (hatachi-canva-gap.png / hc-1700.png) の構成:
+ *   珊瑚レッド全面。ABOUT ラベルは大きめのローマン体。
+ *   見出し「ハタチたちとは。」の下に白い罫線。本文は左、写真は右で画面右端まで裁ち落とし。
+ *   その下に写真をもう1枚、今度は画面左端まで裁ち落とす非対称構成。
+ *   右下に黒いピル型ボタン (草案では Canva テンプレート由来の英語のまま)。
+ *
+ * 珊瑚 #ff5757 に白文字は 3.11:1 で AA 本文基準に届かない。
+ * 半透明の白は 2.4:1 まで落ちるので、この背景の上では必ず不透明の白を使う。
+ */
 type Props = {
   body: string;
+  ctaHref: string | null;
+  ctaLabel: string;
 };
 
-export function About({ body }: Props) {
+export function About({ body, ctaHref, ctaLabel }: Props) {
   return (
     <section id="about" className="bg-coral text-white">
       <div className="mx-auto w-[var(--container)] py-[var(--section-pad-y)]">
-        <p className="text-sm font-bold tracking-[0.5em]">ABOUT</p>
+        <p className="font-roman text-[clamp(28px,4vw,44px)] leading-none font-semibold tracking-[0.3em]">
+          {SECTION_LABELS.about}
+        </p>
 
-        <div className="mt-10 grid gap-10 md:grid-cols-[1fr_1fr] md:gap-14">
+        <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[1fr_0.9fr] md:items-start md:gap-14">
           <div>
-            <h2 className="font-mincho border-b border-white/70 pb-6 text-4xl font-bold tracking-[0.2em] md:text-5xl">
+            <h2 className="font-mincho border-b border-white pb-6 text-[clamp(30px,5.2vw,54px)] font-bold tracking-[0.16em]">
               {ABOUT_HEADING}
             </h2>
-            <p className="font-mincho mt-8 whitespace-pre-line text-base leading-[2.4] tracking-[0.2em] md:text-lg">
+            <p className="font-mincho mt-8 text-[17px] leading-[1.85] tracking-[0.12em] md:mt-10 md:text-[19px] md:leading-[1.75]">
               {body}
             </p>
           </div>
-          <div className="relative aspect-[4/3] self-center overflow-hidden">
-            <PlaceholderImage label="集合写真 1 (about-1)" className="h-full w-full bg-white/20 text-white/60" />
-          </div>
+
+          <figure className="bleed-right relative aspect-[4/3] overflow-hidden">
+            <PlaceholderImage
+              label="集合写真 1 (about-1)"
+              className="h-full w-full bg-white/25 text-white"
+            />
+          </figure>
         </div>
 
-        <div className="mt-14 grid items-center gap-10 md:grid-cols-[2fr_3fr]">
-          <div className="relative aspect-[4/3] overflow-hidden">
-            <PlaceholderImage label="集合写真 2 (about-2)" className="h-full w-full bg-white/20 text-white/60" />
+        <div className="mt-12 grid items-center gap-10 md:mt-16 md:grid-cols-[0.9fr_1fr] md:gap-14">
+          <figure className="bleed-left relative aspect-[4/3] overflow-hidden">
+            <PlaceholderImage
+              label="集合写真 2 (about-2)"
+              className="h-full w-full bg-white/25 text-white"
+            />
+          </figure>
+
+          <div>
+            <p className="font-mincho text-[17px] leading-[1.85] tracking-[0.12em] md:text-[19px] md:leading-[1.75]">
+              {ABOUT_SUB}
+            </p>
+
+            {/* 草案の黒ピルは Canva テンプレートの英語プレースホルダー (VIEW UPCOMING GIGS)。
+                リンク先が無いうちはボタンを出さない (押せない飾りを置かない)。 */}
+            {ctaHref && (
+              <div className="mt-10 md:text-right">
+                <a
+                  href={ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-ink focus-visible:outline-paper inline-block rounded-full px-10 py-4 text-base font-bold tracking-[0.2em] text-white transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4"
+                >
+                  {ctaLabel}
+                </a>
+              </div>
+            )}
           </div>
-          <p className="font-mincho text-base leading-[2.4] tracking-[0.2em] md:text-lg">
-            {ABOUT_SUB}
-          </p>
         </div>
       </div>
     </section>

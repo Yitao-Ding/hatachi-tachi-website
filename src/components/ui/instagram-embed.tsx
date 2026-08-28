@@ -18,18 +18,38 @@ function loadEmbedScript(): Promise<void> {
       s.src = "https://www.instagram.com/embed.js";
       s.async = true;
       s.onload = () => resolve();
+      s.onerror = () => resolve(); // 失敗しても permalink リンクは残るので握って進む
       document.body.appendChild(s);
     });
   }
   return scriptLoading;
 }
 
+function Post({ url }: { url: string }) {
+  return (
+    <blockquote
+      className="instagram-media"
+      data-instgrm-permalink={url}
+      data-instgrm-version="14"
+      style={{ margin: 0, width: "100%", minWidth: 0 }}
+    >
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        Instagramで見る
+      </a>
+    </blockquote>
+  );
+}
+
 type Props = {
   postUrls: string[];
 };
 
-// Instagram 公式 blockquote 埋め込み。embed.js が重いので、
-// セクションが視界に入るまで読み込まない + 高さプレースホルダーでレイアウトシフトを防ぐ。
+/*
+ * Instagram 公式の blockquote 埋め込み。embed.js は重くレイアウトシフトも起こすので、
+ * セクションが視界に近づくまで読み込まない。
+ * 配置は草案どおり「大1枚 + 小4枚」の非対称。プレースホルダーの時だけでなく
+ * 実データでもこの構成を保つ。
+ */
 export function InstagramEmbeds({ postUrls }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -55,22 +75,21 @@ export function InstagramEmbeds({ postUrls }: Props) {
     loadEmbedScript().then(() => window.instgrm?.Embeds.process());
   }, [visible]);
 
+  const [main, ...others] = postUrls;
+  const side = others.slice(0, 4);
+
   return (
-    <div ref={ref} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {postUrls.map((url) => (
-        <div key={url} className="min-h-[480px]">
-          {visible && (
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={url}
-              data-instgrm-version="14"
-              style={{ margin: 0, width: "100%" }}
-            >
-              <a href={url}>Instagramで見る</a>
-            </blockquote>
-          )}
+    <div ref={ref} className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:gap-8">
+      <div className="min-h-[420px]">{visible && main && <Post url={main} />}</div>
+      {side.length > 0 && (
+        <div className="grid grid-cols-2 gap-4">
+          {side.map((url) => (
+            <div key={url} className="min-h-[200px]">
+              {visible && <Post url={url} />}
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
