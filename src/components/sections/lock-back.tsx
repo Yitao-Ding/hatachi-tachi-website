@@ -48,10 +48,10 @@ export function LockBack({ items }: Props) {
             );
 
             const label = (
-              <p className="font-mincho mt-3 text-center text-sm font-semibold tracking-[0.2em] md:text-base">
+              <p className="font-mincho mt-3 text-center text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
                 {item.title}
                 {item.year && (
-                  <span className="ml-2 text-[13px] tracking-[0.1em]">{item.year}</span>
+                  <span className="ml-2">{item.year}</span>
                 )}
               </p>
             );

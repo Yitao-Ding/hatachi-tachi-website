@@ -25,12 +25,12 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
           {SECTION_LABELS.about}
         </p>
 
-        <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[1fr_0.9fr] md:items-start md:gap-14">
+        <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[3fr_2fr] md:items-start md:gap-14">
           <div>
             <h2 className="font-mincho border-b border-white pb-6 text-[clamp(30px,5.2vw,54px)] font-bold tracking-[0.16em]">
               {ABOUT_HEADING}
             </h2>
-            <p className="font-mincho mt-8 text-[17px] leading-[1.85] tracking-[0.12em] md:mt-10 md:text-[19px] md:leading-[1.75]">
+            <p className="font-mincho mt-8 text-[24px] leading-[1.85] tracking-[0.08em] md:mt-10 md:leading-[1.75] md:tracking-[0.12em]">
               {body}
             </p>
           </div>
@@ -52,7 +52,7 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
           </figure>
 
           <div>
-            <p className="font-mincho text-[17px] leading-[1.85] tracking-[0.12em] md:text-[19px] md:leading-[1.75]">
+            <p className="font-mincho text-[24px] leading-[1.85] tracking-[0.08em] md:leading-[1.75] md:tracking-[0.12em]">
               {ABOUT_SUB}
             </p>
 

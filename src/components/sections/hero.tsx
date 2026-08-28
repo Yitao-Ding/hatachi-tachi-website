@@ -48,7 +48,7 @@ export function Hero() {
           </figure>
 
           <p
-            className="vertical-text font-mincho text-coral absolute top-1/2 left-0 hidden -translate-y-1/2 font-bold tracking-[0.3em] md:block md:text-2xl"
+            className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 left-0 hidden -translate-y-1/2 font-bold tracking-[0.3em] md:block md:text-2xl"
             aria-hidden
           >
             {HERO.catchVertical}
@@ -71,7 +71,7 @@ export function Hero() {
 
         {/* モバイルは縦書きが写真を潰すので、左右の縦書きを1文に戻して横書きで置く */}
         <p
-          className="font-mincho text-coral mt-4 text-[15px] font-semibold tracking-[0.16em] md:hidden"
+          className="font-mincho text-coral-on-warm mt-4 text-[19px] font-bold tracking-[0.16em] md:hidden"
           aria-hidden
         >
           {HERO.leadVertical}
