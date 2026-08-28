@@ -79,6 +79,14 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+
+  /* 日本語組版。約物のアキを詰め、和欧混在の間隔を整え、禁則を厳格にし、
+     折返しを文節単位にする。未対応ブラウザは無視するだけで害はない。 */
+  font-feature-settings: "palt" 1;
+  text-spacing-trim: trim-start;
+  line-break: strict;
+  word-break: auto-phrase;
+  overflow-wrap: anywhere;
 }
 
 /* 中央寄せコンテナの中にいる要素を画面端まで裁ち落とす。
@@ -98,6 +106,8 @@ body {
   text-orientation: mixed;
   font-feature-settings: "vpal";
   white-space: nowrap;
+  /* 字送りは呼び出し側で指定する。草案の実測は 0.15em で、
+     ここで一律 0.35em を当てると倍以上開いて別物になる。 */
 }
 
 /* microCMS リッチエディタ本文。サニタイズ後の HTML にだけ適用する */

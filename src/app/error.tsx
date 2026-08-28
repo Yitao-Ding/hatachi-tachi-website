@@ -25,7 +25,7 @@ export default function Error({
       <button
         type="button"
         onClick={reset}
-        className="border-navy text-navy hover:bg-navy focus-visible:outline-navy rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
+        className="border-navy text-navy hover:bg-navy focus-visible:outline-navy rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         再読み込み
       </button>

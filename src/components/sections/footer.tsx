@@ -53,7 +53,7 @@ export function Footer({
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="focus-visible:outline-paper transition hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+                    className="focus-visible:outline-paper transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
                   >
                     {item.label}
                   </a>

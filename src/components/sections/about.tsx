@@ -64,7 +64,7 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
                   href={ctaHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-ink focus-visible:outline-paper inline-block rounded-full px-10 py-4 text-base font-bold tracking-[0.2em] text-white transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4"
+                  className="bg-ink focus-visible:outline-paper inline-block rounded-full px-10 py-4 text-base font-bold tracking-[0.2em] text-white transition-colors hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4"
                 >
                   {ctaLabel}
                 </a>

@@ -67,7 +67,7 @@ export function NewsSection({ items, ctaLabel = "詳しくはこちら" }: Props
             )}
 
             {lead && (
-              <p className="font-mincho mx-auto mt-6 max-w-[46em] text-[15px] leading-[2.1] tracking-[0.08em] md:text-base">
+              <p className="font-mincho mx-auto mt-6 max-w-[30em] text-left text-[15px] leading-[2.1] tracking-[0.08em] md:text-base">
                 {lead}
               </p>
             )}
@@ -82,7 +82,7 @@ export function NewsSection({ items, ctaLabel = "詳しくはこちら" }: Props
           <div className="flex justify-end py-6 pr-[6vw] pl-28 md:pl-32">
             <Link
               href={href}
-              className="bg-paper text-navy hover:bg-paper-warm focus-visible:outline-paper inline-block rounded-full px-8 py-3.5 font-mincho text-[15px] font-bold tracking-[0.16em] whitespace-nowrap transition focus-visible:outline-2 focus-visible:outline-offset-4 md:px-12 md:py-4 md:text-lg md:tracking-[0.2em]"
+              className="bg-paper text-navy hover:bg-paper-warm focus-visible:outline-paper inline-block rounded-full px-8 py-3.5 font-mincho text-[15px] font-bold tracking-[0.16em] whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 md:px-12 md:py-4 md:text-lg md:tracking-[0.2em]"
               {...(external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
@@ -100,7 +100,7 @@ export function NewsSection({ items, ctaLabel = "詳しくはこちら" }: Props
               <li key={item.id}>
                 <Link
                   href={item.externalUrl ?? `/news/${item.id}`}
-                  className="hover:bg-paper-warm flex flex-col gap-1 py-5 transition md:flex-row md:items-center md:gap-8"
+                  className="hover:bg-paper-warm flex flex-col gap-1 py-5 transition-colors md:flex-row md:items-center md:gap-8"
                   {...(item.externalUrl
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}

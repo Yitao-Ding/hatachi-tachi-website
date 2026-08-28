@@ -33,7 +33,7 @@ export default async function NewsIndexPage() {
               <li key={item.id}>
                 <Link
                   href={item.externalUrl ?? `/news/${item.id}`}
-                  className="hover:bg-paper-warm flex flex-col gap-1 py-6 transition md:flex-row md:items-baseline md:gap-8"
+                  className="hover:bg-paper-warm flex flex-col gap-1 py-6 transition-colors md:flex-row md:items-baseline md:gap-8"
                   {...(item.externalUrl
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
@@ -58,7 +58,7 @@ export default async function NewsIndexPage() {
         <div className="mt-14">
           <Link
             href="/"
-            className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
+            className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             トップへ戻る
           </Link>

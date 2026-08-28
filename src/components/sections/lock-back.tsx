@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ArchiveItem } from "@/content/site";
 import { SECTION_LABELS } from "@/content/site";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
+import { extractVideoId } from "@/lib/youtube";
 
 type Props = {
   items: ArchiveItem[];
@@ -26,17 +27,25 @@ export function LockBack({ items }: Props) {
 
         <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 md:mt-20 md:grid-cols-3 md:gap-x-10">
           {items.map((item) => {
+            // 画像未設定でも動画があればそのサムネイルを使う。
+            // hqdefault は 4:3 で上下に黒帯が入るが、16:9 の枠に object-cover で
+            // 収めると帯がちょうど切り落とされる。
+            const videoId = item.videoUrl ? extractVideoId(item.videoUrl) : null;
+            const thumb =
+              item.imageUrl ??
+              (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null);
+
             // 画像の alt は空にする。すぐ下に同じ作品名が可視テキストで出るので、
             // alt を入れるとスクリーンリーダーが作品名を2回読む。
             const media = (
-              <div className="relative aspect-[4/3] overflow-hidden">
-                {item.imageUrl ? (
+              <div className="relative aspect-video overflow-hidden">
+                {thumb ? (
                   <Image
-                    src={item.imageUrl}
+                    src={thumb}
                     alt=""
                     fill
                     sizes="(min-width: 768px) 30vw, 45vw"
-                    className="object-cover transition duration-300 group-hover:scale-[1.04]"
+                    className="object-cover"
                   />
                 ) : (
                   <PlaceholderImage
@@ -50,9 +59,7 @@ export function LockBack({ items }: Props) {
             const label = (
               <p className="font-mincho mt-3 text-center text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
                 {item.title}
-                {item.year && (
-                  <span className="ml-2">{item.year}</span>
-                )}
+                {item.year && <span className="ml-2">{item.year}</span>}
               </p>
             );
 
@@ -70,7 +77,7 @@ export function LockBack({ items }: Props) {
                     <span className="sr-only">YouTubeで見る</span>
                   </a>
                 ) : (
-                  <div className="group">
+                  <div>
                     {media}
                     {label}
                   </div>

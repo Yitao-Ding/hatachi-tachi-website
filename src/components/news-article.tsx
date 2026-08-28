@@ -49,13 +49,13 @@ export function NewsArticle({ item }: { item: NewsItem }) {
         <div className="mt-16 flex flex-wrap gap-4">
           <Link
             href="/news"
-            className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
+            className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-8 py-3 font-mincho text-sm font-bold tracking-[0.2em] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             お知らせ一覧
           </Link>
           <Link
             href="/"
-            className="text-ink-muted hover:text-ink inline-block px-4 py-3 font-mincho text-sm tracking-[0.2em] transition"
+            className="text-ink-muted hover:text-ink inline-block px-4 py-3 font-mincho text-sm tracking-[0.2em] transition-colors"
           >
             トップへ戻る
           </Link>

@@ -40,7 +40,7 @@ export function InstagramGrid({ postUrls, profileUrl }: Props) {
               href={profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-10 py-3.5 font-mincho text-base font-bold tracking-[0.2em] transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
+              className="border-navy text-navy hover:bg-navy focus-visible:outline-navy inline-block rounded-full border-2 px-10 py-3.5 font-mincho text-base font-bold tracking-[0.2em] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               公式Instagramを見る
             </a>

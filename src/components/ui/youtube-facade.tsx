@@ -35,10 +35,10 @@ export function YouTubeFacade({ videoId, title }: Props) {
       <img
         src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
         alt=""
-        className="h-full w-full object-cover opacity-85 transition group-hover:opacity-100"
+        className="h-full w-full object-cover opacity-85 transition-opacity group-hover:opacity-100"
         loading="lazy"
       />
-      <span className="bg-coral absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full text-white transition group-hover:scale-110">
+      <span className="bg-coral group-hover:bg-coral-on-warm absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full text-white transition-colors">
         <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor" aria-hidden>
           <path d="M0 0 L20 12 L0 24 Z" />
         </svg>
