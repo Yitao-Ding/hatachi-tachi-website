@@ -1,0 +1,6 @@
+# 単一パッケージ (workspace 定義は無し)。
+# pnpm 11 はビルド許可設定をこのファイルから読む。
+# sharp / unrs-resolver の native postinstall を許可しないと install/next build が失敗する。
+allowBuilds:
+  sharp: true
+  unrs-resolver: true

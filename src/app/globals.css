@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* =========================================================
+   ハタチたち — design tokens (Canva 草案 DAHTaN6Dxr8 由来)
+   正確な HEX は素材受領後に差し替える (このファイルの :root だけ触れば全体に効く)
+   ========================================================= */
+
+@theme inline {
+  --color-coral: var(--coral);
+  --color-coral-deep: var(--coral-deep);
+  --color-navy: var(--navy);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+
+  --font-mincho: var(--ff-mincho);
+  --font-sans: var(--ff-sans);
+}
+
+:root {
+  --coral: #f1554f;
+  --coral-deep: #d94540;
+  --navy: #22409a;
+  --ink: #1f2430;
+  --paper: #ffffff;
+  --paper-soft: #f7f3ee;
+
+  --container: min(1120px, 92vw);
+  --section-pad-y: clamp(56px, 8vw, 112px);
+
+  --ff-mincho: var(--font-shippori), "Hiragino Mincho ProN", serif;
+  --ff-sans: var(--font-noto-jp), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  font-family: var(--ff-sans);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.9;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 縦書き (装飾テキスト限定。長文には使わない) */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.35em;
+  font-feature-settings: "vpal";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
