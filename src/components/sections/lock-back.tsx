@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ArchiveItem } from "@/content/site";
-import { SECTION_LABELS } from "@/content/site";
+import { IN_PRODUCTION_LABEL, SECTION_LABELS } from "@/content/site";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { extractVideoId } from "@/lib/youtube";
 
@@ -8,8 +8,8 @@ type Props = {
   items: ArchiveItem[];
 };
 
-// 見出しの表記は草案どおり「LOCK BACK」。英語としては LOOK BACK の誤記の可能性があり、
-// 変えるときは SECTION_LABELS.archive の1箇所を直せばフッターのリンク名まで揃う。
+// 見出しは SECTION_LABELS.archive の1箇所で管理している。
+// ここを直すとフッターのリンク名まで揃う。
 export function LockBack({ items }: Props) {
   if (items.length === 0) return null;
 
@@ -35,9 +35,17 @@ export function LockBack({ items }: Props) {
               item.imageUrl ??
               (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null);
 
-            // 画像の alt は空にする。すぐ下に同じ作品名が可視テキストで出るので、
+            // 制作中の枠はサムネイルの代わりに枠線だけを置き、中央に一語だけ出す。
+            // 完成作と同じ見え方にすると「まだ観られない」ことが伝わらない。
+            // 完成作の画像の alt は空にする。すぐ下に同じ作品名が可視テキストで出るので、
             // alt を入れるとスクリーンリーダーが作品名を2回読む。
-            const media = (
+            const media = item.inProduction ? (
+              <div className="flex aspect-video items-center justify-center border border-white/60">
+                <span className="font-mincho text-[17px] tracking-[0.3em] md:text-[18px]">
+                  {IN_PRODUCTION_LABEL}
+                </span>
+              </div>
+            ) : (
               <div className="relative aspect-video overflow-hidden">
                 {thumb ? (
                   <Image

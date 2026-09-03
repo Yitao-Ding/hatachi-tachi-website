@@ -23,7 +23,22 @@ export type ArchiveItem = {
   imageUrl: string | null;
   videoUrl: string | null;
   sortOrder: number;
+  /**
+   * どの企画の作品か。今はハタチたちしか無いので全て "hatachitachi"。
+   * 将来スタジオメタリのサイトを足すときに、archive API を作り直さずに
+   * 企画で絞り込めるようにするためのフィールド (microCMS のスキーマは
+   * 後から変えると入力済みコンテンツの入れ直しが要るので先に入れてある)。
+   */
+  project: string;
+  /**
+   * 制作中の枠。動画がまだ無いが「今つくっている」ことを見せたいものに立てる。
+   * videoUrl が無いだけでは判別できない (平成たち祭は制作中ではなく動画が無いだけ)。
+   */
+  inProduction: boolean;
 };
+
+/** archive.project の既定値。microCMS 側で未入力ならこれとして扱う。 */
+export const DEFAULT_PROJECT = "hatachitachi";
 
 export type SiteSettings = {
   nowPlayingUrl: string | null;
@@ -54,8 +69,11 @@ export const SECTION_LABELS = {
   news: "NEWS",
   about: "ABOUT",
   nowPlaying: "NOW PLAYING",
-  /** 草案の表記どおり。英語としては LOOK BACK の誤記の可能性があり YD 確認中。 */
-  archive: "LOCK BACK",
+  /**
+   * 草案の表記は "LOCK BACK" だったが、英語としては LOOK BACK の誤記。
+   * 2026-09-03 YD 判断で修正。ここを直すとフッターのリンク名まで揃う。
+   */
+  archive: "LOOK BACK",
   instagram: "INSTAGRAM",
 } as const;
 
@@ -93,8 +111,8 @@ export const FALLBACK_NEWS: NewsItem[] = [
   },
 ];
 
-// 実在する公開作品のみ。ハタチたち5 は未制作なのでアーカイブに入れない
-// (草案には6枠目があるが、同じページの NEWS「開催決定！」と矛盾するため。YD 確認事項)。
+// 草案どおり6枠。ハタチたち5 は未制作なので inProduction を立てて「制作中」で出す
+// (2026-09-03 YD 判断)。完成したら microCMS で動画URLを入れて inProduction を外す。
 export const FALLBACK_ARCHIVE: ArchiveItem[] = [
   {
     id: "gen-1",
@@ -103,6 +121,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     imageUrl: null,
     videoUrl: "https://youtu.be/pkBvdMpLzx8",
     sortOrder: 1,
+    project: DEFAULT_PROJECT,
+    inProduction: false,
   },
   {
     id: "gen-2",
@@ -111,6 +131,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     imageUrl: null,
     videoUrl: "https://youtu.be/SLzwOObZcm8",
     sortOrder: 2,
+    project: DEFAULT_PROJECT,
+    inProduction: false,
   },
   {
     id: "gen-3",
@@ -119,6 +141,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     imageUrl: null,
     videoUrl: "https://youtu.be/DQTgxCvuGRY",
     sortOrder: 3,
+    project: DEFAULT_PROJECT,
+    inProduction: false,
   },
   {
     id: "gen-4",
@@ -127,6 +151,19 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     imageUrl: null,
     videoUrl: "https://youtu.be/RigEjrlltEM",
     sortOrder: 4,
+    project: DEFAULT_PROJECT,
+    inProduction: false,
+  },
+  {
+    id: "gen-5",
+    title: "ハタチたち5",
+    // 上映年は未確定。推測を置かない方針なので空にしてある (YD 確認事項)
+    year: "",
+    imageUrl: null,
+    videoUrl: null,
+    sortOrder: 5,
+    project: DEFAULT_PROJECT,
+    inProduction: true,
   },
   {
     id: "heiseitachi",
@@ -134,9 +171,14 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "",
     imageUrl: null,
     videoUrl: null,
-    sortOrder: 5,
+    sortOrder: 6,
+    project: DEFAULT_PROJECT,
+    inProduction: false,
   },
 ];
+
+/** 制作中の枠に出すラベル。 */
+export const IN_PRODUCTION_LABEL = "制作中";
 
 export const FALLBACK_SITE: SiteSettings = {
   // 最新作 (ハタチたち4) を初期表示にする

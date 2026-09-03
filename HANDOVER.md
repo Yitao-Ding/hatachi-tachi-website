@@ -46,16 +46,28 @@ microCMS 画像は imgix パラメータ (`src/lib/image-loader.ts`) で Vercel 
 | 3 (2025) | かくれんぼ / AliA | https://youtu.be/DQTgxCvuGRY |
 | 4 (2026) | ピーターパン / 優里 | https://youtu.be/RigEjrlltEM |
 
-- ドメイン `hatachitachi.com` は空き (RDAP で対照実験付きで確認済み、2026-08-28 時点)
+- ドメイン `hatachitachi.com` / `studiometali.com` は 2026-09-03 に取得済み
+
+## 決まったこと (2026-09-03)
+
+- スタジオメタリは PD 個人の屋号で、ハタチたちはその中の企画のひとつ。PD は代替わりしないので、
+  microCMS / GitHub / Vercel は PD 個人アカウントでよい。毎年の代にはメンバー招待だけ渡す
+- スタジオメタリのサイトは今回作らない。ハタチたち単体で完成させる。
+  将来入れ子にするときは middleware 1本で足りるので、今は構造を複雑にしない。
+  ただし `archive` には `project` フィールドだけ先に入れてある (スキーマを後から変えると入力し直しになるため)
+- ドメイン取得済み: `hatachitachi.com` / `studiometali.com` (お名前ID 20382623、2026-09-03)。
+  本番は `hatachitachi.com`
+- 確認5件はすべて確定 → `docs/assets-list.md` の「確定済み」を参照
 
 ## 次のアクション
 
 ### YD 作業 (これが揃わないと先に進めない)
 
-1. `docs/accounts.md` を読んで、GitHub / Vercel / レジストラを誰の名義にするか決める (Phase 4 の前に必須)
+1. **ドメイン情報認証メールをクリック (2026-09-17 期限)**。踏まないと2ドメインとも強制停止する。
+   ついでにお名前.com Navi で自動更新 ON を確認する
 2. microCMS アカウント + API 3本作成 → `docs/microcms-setup.md` の手順どおり → APIキー共有
-3. 素材と情報の提供 → `docs/assets-list.md`。末尾の確認事項5件も
-4. ドメイン取得
+3. 素材と情報の提供 → `docs/assets-list.md`
+4. 問い合わせ先アドレスを決める (個人 Gmail を載せない。独自ドメインのアドレスか Instagram DM か)
 
 ### Claude 作業 (入力が届き次第)
 
@@ -79,5 +91,4 @@ microCMS 画像は imgix パラメータ (`src/lib/image-loader.ts`) で Vercel 
 
 ## YD 判断待ちの一覧
 
-`docs/assets-list.md` 末尾の5件 (LOCK BACK 表記 / 「台」→「代」/ アーカイブ枠数 / 応募導線の優先度 / 赤の濃さ) と、
-`docs/accounts.md` のアカウント名義。
+`docs/assets-list.md` の「まだ聞きたいこと」— ハタチたち5 の上映年、上映日と応募締切、問い合わせ先アドレス。

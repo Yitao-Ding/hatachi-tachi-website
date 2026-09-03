@@ -1,6 +1,7 @@
 import { createClient } from "microcms-js-sdk";
 import sanitizeHtml from "sanitize-html";
 import {
+  DEFAULT_PROJECT,
   FALLBACK_ARCHIVE,
   FALLBACK_NEWS,
   FALLBACK_SITE,
@@ -80,6 +81,9 @@ type ArchiveRecord = {
   image?: MicroCMSImage;
   videoUrl?: string;
   sortOrder?: number;
+  /** セレクトフィールド。microCMS は単一選択でも配列で返す。 */
+  project?: string[] | string;
+  inProduction?: boolean;
 };
 
 type SiteRecord = {
@@ -192,6 +196,9 @@ export async function getArchiveList(): Promise<ArchiveItem[]> {
       imageUrl: c.image?.url ?? null,
       videoUrl: c.videoUrl?.trim() || null,
       sortOrder: c.sortOrder ?? i,
+      // 未入力なら既定の企画とみなす。フィールドを作り忘れても表示は壊れない
+      project: (Array.isArray(c.project) ? c.project[0] : c.project) || DEFAULT_PROJECT,
+      inProduction: c.inProduction === true,
     }));
   } catch (error) {
     handle("archive", error);
