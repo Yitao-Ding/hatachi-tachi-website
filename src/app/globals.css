@@ -10,6 +10,7 @@
   --color-coral: var(--coral);
   --color-coral-on-warm: var(--coral-on-warm);
   --color-coral-ink: var(--coral-ink);
+  --color-coral-deep: var(--coral-deep);
   --color-navy: var(--navy);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
@@ -118,7 +119,34 @@ body {
   font-family: var(--ff-mincho);
   font-size: 1.4rem;
   font-weight: 700;
-  margin-top: 2.4em;
+  margin-top: 2.8em;
+  padding-bottom: 0.5em;
+  letter-spacing: 0.1em;
+  /* トップの ABOUT 見出しと同じ「下に一本の罫線」。装飾はこれ以上足さない */
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+.news-body :where(h2 + *) {
+  margin-top: 1.6em;
+}
+
+/* 募集要項のような項目立て。行頭記号は出さず、ラベルと値の関係を余白だけで作る */
+.news-body :where(ul) {
+  margin-top: 1.6em;
+  padding: 0;
+  list-style: none;
+}
+.news-body :where(li) {
+  margin-top: 1em;
+  padding-left: 1em;
+  border-left: 2px solid var(--coral);
+  line-height: 1.95;
+}
+.news-body :where(li strong) {
+  font-family: var(--ff-mincho);
+  display: block;
+  font-size: 0.86em;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
 }
 .news-body :where(a) {
   color: var(--navy);

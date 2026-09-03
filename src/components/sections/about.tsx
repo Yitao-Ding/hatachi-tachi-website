@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { ABOUT_HEADING, ABOUT_SUB, SECTION_LABELS } from "@/content/site";
-import { PlaceholderImage } from "@/components/ui/placeholder-image";
 
 /*
  * 草案 (hatachi-canva-gap.png / hc-1700.png) の構成:
@@ -36,18 +36,24 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
           </div>
 
           <figure className="bleed-right relative aspect-[4/3] overflow-hidden">
-            <PlaceholderImage
-              label="集合写真 1 (about-1)"
-              className="h-full w-full bg-white/25 text-white"
+            <Image
+              src="/assets/about-1.webp"
+              alt="撮影を終えて集合したハタチたちのメンバー"
+              fill
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover"
             />
           </figure>
         </div>
 
         <div className="mt-12 grid items-center gap-10 md:mt-16 md:grid-cols-[0.9fr_1fr] md:gap-14">
           <figure className="bleed-left relative aspect-[4/3] overflow-hidden">
-            <PlaceholderImage
-              label="集合写真 2 (about-2)"
-              className="h-full w-full bg-white/25 text-white"
+            <Image
+              src="/assets/about-2.webp"
+              alt="体育館いっぱいに広がって記念撮影をするメンバー"
+              fill
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover"
             />
           </figure>
 

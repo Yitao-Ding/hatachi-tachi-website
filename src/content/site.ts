@@ -97,16 +97,53 @@ export const FALLBACK_ABOUT_BODY = [
 export const FEATURED_NEWS_LEAD =
   "川崎市・相模原市・福島市のはたちのつどい、そしてYOUTUBEにて上映される、二十歳100人でつくるダンス映像『ハタチたち5』。一生に一度の記念に、ぜひご応募ください！";
 
+/** 募集告知の元になっている公式Instagramの投稿 (2026-08-01)。 */
+export const ENTRY_POST_URL = "https://www.instagram.com/p/Dbf2tjXEwDj/";
+export const INSTAGRAM_PROFILE_URL = "https://www.instagram.com/hatachi_tachi/";
+
+const ext = (href: string, text: string) =>
+  `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+
+/*
+ * 本文は公式Instagramの募集投稿 (2026-08-01) の文面から起こしている。
+ * 投稿に書かれていないことは書かない。スケジュールと応募フォームURLは
+ * 投稿内の画像 (6枚目・8枚目のQRコード) にしかないので、ここでは投稿へ誘導している。
+ * microCMS に news を作ったらこの内容は表示されなくなる (フォールバックのため)。
+ */
+const HATACHITACHI5_BODY = [
+  "<p>その年に二十歳を迎える100人でつくるダンス映像プロジェクト「ハタチたち」。",
+  "5作目となる『ハタチたち5』のダンサーを募集しています。</p>",
+  "<p>ダンス歴は問いません。ブランクがあっても大丈夫です。",
+  "「何かに本気になりたい」「同世代と最高の思い出をつくりたい」",
+  "「二十歳だからこそ挑戦してみたい」、そんな方をお待ちしています。</p>",
+
+  "<h2>募集要項</h2>",
+  "<ul>",
+  "<li><strong>募集期間</strong>2026年8月1日（土）〜9月30日（水）</li>",
+  "<li><strong>参加対象</strong>2027年に成人式を迎える代（2006年4月2日〜2007年4月1日生まれ）</li>",
+  "<li><strong>参加費</strong>4,000円＋衣装代（Tシャツ2,500円程度）＋パートリハーサルのスタジオ代（1,000円未満予定）</li>",
+  "<li><strong>撮影場所</strong>東柏ヶ谷小学校</li>",
+  "<li><strong>使用楽曲</strong>後日公開</li>",
+  "</ul>",
+  "<p>スケジュールは公式Instagramの募集投稿に掲載しています。</p>",
+
+  "<h2>応募方法</h2>",
+  `<p>公式Instagramの${ext(ENTRY_POST_URL, "募集投稿")}に、`,
+  "応募フォームへのQRコードを掲載しています。そちらからご応募ください。</p>",
+
+  "<h2>お問い合わせ</h2>",
+  `<p>ご質問は${ext(INSTAGRAM_PROFILE_URL, "公式Instagram")}のDMまでお気軽にどうぞ。`,
+  "保護者の方からのお問い合わせも同じ窓口で承ります。</p>",
+].join("\n");
+
 export const FALLBACK_NEWS: NewsItem[] = [
   {
     id: "hatachitachi-5",
     title: "ハタチたち5 開催決定！ & ダンサー募集中！",
-    publishedDate: "",
+    publishedDate: "2026-08-01",
     lead: FEATURED_NEWS_LEAD,
-    thumbnailUrl: null,
-    body:
-      "<p>川崎市・相模原市・福島市のはたちのつどい、そしてYouTubeにて上映される、" +
-      "二十歳100人でつくるダンス映像『ハタチたち5』。一生に一度の記念に、ぜひご応募ください。</p>",
+    thumbnailUrl: "/assets/news-hatachitachi5.webp",
+    body: HATACHITACHI5_BODY,
     externalUrl: null,
   },
 ];
@@ -157,8 +194,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
   {
     id: "gen-5",
     title: "ハタチたち5",
-    // 上映年は未確定。推測を置かない方針なので空にしてある (YD 確認事項)
-    year: "",
+    // 募集投稿の「2027年に成人式を迎える代」から確定
+    year: "2027",
     imageUrl: null,
     videoUrl: null,
     sortOrder: 5,
@@ -184,8 +221,17 @@ export const FALLBACK_SITE: SiteSettings = {
   // 最新作 (ハタチたち4) を初期表示にする
   nowPlayingUrl: "https://youtu.be/RigEjrlltEM",
   nowPlayingCaption: "ハタチたち4 -「ピーターパン」優里",
-  instagramPostUrls: [],
-  instagramProfileUrl: "https://www.instagram.com/hatachi_tachi/",
+  // 先頭が大きい枠。募集投稿を主役に置き、残りは直近の投稿を新しい順に並べている
+  instagramPostUrls: [
+    ENTRY_POST_URL,
+    "https://www.instagram.com/reel/DcgN5EXTG3j/",
+    "https://www.instagram.com/p/DcbEOT-kzeD/",
+    "https://www.instagram.com/p/DcYffPyk91t/",
+    "https://www.instagram.com/p/DcV6qWzkypO/",
+  ],
+  instagramProfileUrl: INSTAGRAM_PROFILE_URL,
+  // 応募フォームの実URLは募集投稿のQRコードの中にしか無く、まだ入手できていない。
+  // 分かったらここに入れると ABOUT に応募ボタンが出る (YD 確認事項)
   entryFormUrl: null,
   aboutBody: FALLBACK_ABOUT_BODY,
   contactEmail: null,

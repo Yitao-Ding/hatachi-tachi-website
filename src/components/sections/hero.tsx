@@ -1,5 +1,21 @@
+import Image from "next/image";
 import { HERO } from "@/content/site";
-import { PlaceholderImage } from "@/components/ui/placeholder-image";
+
+/*
+ * 背景コラージュの4枚。枠の縦横に合わせて縦写真・横写真を割り当ててある
+ * (左右のカラムは縦長、中央の上下は横長)。差し替えるときは
+ * scripts/build-assets.mjs の bg 定義を直して再生成する。
+ */
+const BG = [
+  "/assets/hero-bg-1.webp",
+  "/assets/hero-bg-2.webp",
+  "/assets/hero-bg-3.webp",
+  "/assets/hero-bg-4.webp",
+] as const;
+
+function BgImage({ src, sizes }: { src: string; sizes: string }) {
+  return <Image src={src} alt="" fill sizes={sizes} className="object-cover" />;
+}
 
 /*
  * 草案 (hc-000.png) の実測。カンバス 1152×648 = 16:9 ちょうど。
@@ -23,17 +39,34 @@ import { PlaceholderImage } from "@/components/ui/placeholder-image";
 export function Hero() {
   return (
     <section className="bg-paper-warm relative aspect-[3/4] w-full overflow-hidden md:aspect-[16/9]">
-      {/* L0 背景コラージュ。白飛ばしして地としてだけ効かせる。継ぎ目は残す */}
+      {/*
+       * L0 背景コラージュ。白飛ばしして地としてだけ効かせる。継ぎ目は残す。
+       *
+       * 左右の端はマスクで抜いてある。ここには珊瑚の縦書きが乗るので、写真の暗い部分が
+       * そのまま出るとコントラストが 1.46:1 まで落ちて読めなくなる (実測値。
+       * scripts/check-hero-contrast.mjs で再現できる)。
+       * 珊瑚を 3:1 に乗せるには背景がほぼ紙色である必要があり、不透明度を下げるだけでは
+       * 足りない (真っ黒な写真を 4.5% まで薄めないと届かない = コラージュが消える)。
+       * そのため「全体を薄くする」のではなく「文字が乗る帯だけ抜く」で解いている。
+       */}
       <div
-        className="absolute inset-0 grid grid-cols-[31.9%_34.8%_33.3%] opacity-[0.35] grayscale"
+        className="absolute inset-0 grid grid-cols-[31.9%_34.8%_33.3%] opacity-[0.3] grayscale brightness-[1.35] [mask-image:linear-gradient(to_right,transparent_0%,transparent_11%,black_19%,black_81%,transparent_89%,transparent_100%)]"
         aria-hidden
       >
-        <PlaceholderImage className="h-full w-full" />
         <div className="relative">
-          <PlaceholderImage className="absolute inset-x-0 top-0 h-[28.9%] w-full" />
-          <PlaceholderImage className="absolute inset-x-0 bottom-0 h-[25.6%] w-full" />
+          <BgImage src={BG[0]} sizes="32vw" />
         </div>
-        <PlaceholderImage className="h-full w-full" />
+        <div className="relative">
+          <div className="absolute inset-x-0 top-0 h-[28.9%]">
+            <BgImage src={BG[1]} sizes="35vw" />
+          </div>
+          <div className="absolute inset-x-0 bottom-0 h-[25.6%]">
+            <BgImage src={BG[2]} sizes="35vw" />
+          </div>
+        </div>
+        <div className="relative">
+          <BgImage src={BG[3]} sizes="34vw" />
+        </div>
       </div>
 
       <h1 className="sr-only">
@@ -56,8 +89,15 @@ export function Hero() {
 
       {/* L2 主写真。不透明なので、重なったレタリングをここで切り落とす */}
       <figure className="absolute top-[34%] left-[12%] w-[76%] overflow-hidden bg-[#dedad4] md:top-[28.9%] md:left-[15.45%] md:w-[69.3%]">
-        <div className="aspect-[16/9] md:aspect-[270/100]">
-          <PlaceholderImage label="円陣写真 (hero-circle)" className="h-full w-full" />
+        <div className="relative aspect-[16/9] md:aspect-[270/100]">
+          <Image
+            src="/assets/hero-circle.webp"
+            alt="体育館で円陣を組むハタチたちのメンバー"
+            fill
+            sizes="(min-width: 768px) 70vw, 76vw"
+            priority
+            className="object-cover"
+          />
         </div>
       </figure>
 
@@ -68,8 +108,10 @@ export function Hero() {
       >
         {HERO.catchVertical}
       </p>
+      {/* 草案では白だったが、2026-09-03 YD 判断で左の縦書きと同じ珊瑚に揃えた。
+          「ここからは私たちがつくる最強セカイ」で一文なので、色が割れているほうが不自然。 */}
       <p
-        className="vertical-text font-mincho absolute top-1/2 right-[5%] -translate-y-1/2 text-[3vw] tracking-[0.15em] text-white md:right-[6.25%] md:text-[2.34vw]"
+        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 right-[5%] -translate-y-1/2 text-[3vw] tracking-[0.15em] md:right-[6.25%] md:text-[2.34vw]"
         aria-hidden
       >
         {HERO.leadVertical}
