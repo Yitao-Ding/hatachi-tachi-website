@@ -55,7 +55,7 @@ microCMS 画像は imgix パラメータ (`src/lib/image-loader.ts`) で Vercel 
 - スタジオメタリのサイトは今回作らない。ハタチたち単体で完成させる。
   将来入れ子にするときは middleware 1本で足りるので、今は構造を複雑にしない。
   ただし `archive` には `project` フィールドだけ先に入れてある (スキーマを後から変えると入力し直しになるため)
-- ドメイン取得済み: `hatachitachi.com` / `studiometali.com` (お名前ID 20382623、2026-09-03)。
+- ドメイン取得済み: `hatachitachi.com` / `studiometali.com` (お名前.com、2026-09-03)。
   本番は `hatachitachi.com`
 - 確認5件はすべて確定 → `docs/assets-list.md` の「確定済み」を参照
 
