@@ -81,8 +81,14 @@ export function InstagramEmbeds({ postUrls }: Props) {
   return (
     <div ref={ref} className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:gap-8">
       <div className="min-h-[420px]">{visible && main && <Post url={main} />}</div>
+      {/*
+       * 小4枚はスマホでは出さない。2カラムに押し込むと1枚あたり約185pxになり、
+       * Instagram 埋め込みの最小幅を割って投稿タイトルが見切れ、「プロフィールを表示」の
+       * ボタンが「Instagramで見る」に重なる (2026-09-05 YD 指摘)。
+       * スマホでは大1枚と下のボタンで足りる。セクション高も 2301px → 約600px に落ちる。
+       */}
       {side.length > 0 && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="hidden grid-cols-2 gap-4 md:grid">
           {side.map((url) => (
             <div key={url} className="min-h-[200px]">
               {visible && <Post url={url} />}

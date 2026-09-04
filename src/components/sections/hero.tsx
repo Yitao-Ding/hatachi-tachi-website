@@ -36,9 +36,16 @@ function BgImage({ src, sizes }: { src: string; sizes: string }) {
  *
  * レタリングは装飾なので aria-hidden。読み上げと検索には sr-only の h1 を使う。
  */
+/*
+ * モバイルは草案の構図をそのまま縦長に潰すのではなく、3:4 のまま画面中央に置く。
+ * aspect-[3/4] 固定だと iPhone (390×844) で高さ 520px しか使わず、スクロールなしで
+ * NEWS の紺帯が顔を出して第一印象が窮屈になっていた (2026-09-05 YD 指摘)。
+ * 構図の比率は触らずに、上下の紙色の余白で画面を埋める。
+ */
 export function Hero() {
   return (
-    <section className="bg-paper-warm relative aspect-[3/4] w-full overflow-hidden md:aspect-[16/9]">
+    <section className="bg-paper-warm grid min-h-[100svh] w-full place-items-center overflow-hidden md:block md:min-h-0">
+      <div className="relative aspect-[3/4] w-full overflow-hidden md:aspect-[16/9]">
       {/*
        * L0 背景コラージュ。白飛ばしして地としてだけ効かせる。継ぎ目は残す。
        *
@@ -50,7 +57,7 @@ export function Hero() {
        * そのため「全体を薄くする」のではなく「文字が乗る帯だけ抜く」で解いている。
        */}
       <div
-        className="absolute inset-0 grid grid-cols-[31.9%_34.8%_33.3%] opacity-[0.3] grayscale brightness-[1.35] [mask-image:linear-gradient(to_right,transparent_0%,transparent_11%,black_19%,black_81%,transparent_89%,transparent_100%)]"
+        className="hero-collage-mask absolute inset-0 grid grid-cols-[31.9%_34.8%_33.3%] opacity-[0.3] grayscale brightness-[1.35]"
         aria-hidden
       >
         <div className="relative">
@@ -103,7 +110,7 @@ export function Hero() {
 
       {/* L3 縦書き。太字にせず細い明朝で、字送りは実測の 0.15em */}
       <p
-        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 left-[5%] -translate-y-1/2 text-[3.6vw] tracking-[0.15em] md:left-[6.1%] md:text-[2.86vw]"
+        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 left-[5%] -translate-y-1/2 text-[4.8vw] tracking-[0.15em] md:left-[6.1%] md:text-[2.86vw]"
         aria-hidden
       >
         {HERO.catchVertical}
@@ -111,11 +118,12 @@ export function Hero() {
       {/* 草案では白だったが、2026-09-03 YD 判断で左の縦書きと同じ珊瑚に揃えた。
           「ここからは私たちがつくる最強セカイ」で一文なので、色が割れているほうが不自然。 */}
       <p
-        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 right-[5%] -translate-y-1/2 text-[3vw] tracking-[0.15em] md:right-[6.25%] md:text-[2.34vw]"
+        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 right-[5%] -translate-y-1/2 text-[4.2vw] tracking-[0.15em] md:right-[6.25%] md:text-[2.34vw]"
         aria-hidden
       >
-        {HERO.leadVertical}
-      </p>
+          {HERO.leadVertical}
+        </p>
+      </div>
     </section>
   );
 }

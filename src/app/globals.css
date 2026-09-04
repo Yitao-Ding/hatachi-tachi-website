@@ -99,6 +99,42 @@ body {
   margin-left: calc((var(--container) - 100vw) / 2);
 }
 
+/* ヒーロー背景コラージュのマスク。
+   左右は常に抜く。ここには珊瑚の縦書きが乗るので、写真の暗い部分が出るとコントラストが
+   1.46:1 まで落ちて読めなくなる (scripts/check-hero-contrast.mjs で再現できる)。
+
+   スマホでは加えて上下も抜く。セクションを 100svh にして構図を中央に置いた結果、
+   コラージュの上下に紙色の余白ができ、境界が直線だと貼り付けた箱に見えるため
+   (2026-09-05)。デスクトップは 16:9 が画面幅いっぱいに出るので上下の処理は要らない。 */
+.hero-collage-mask {
+  --hero-mask-x: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 11%,
+    black 19%,
+    black 81%,
+    transparent 89%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--hero-mask-x);
+  mask-image: var(--hero-mask-x);
+}
+@media (width < 48rem) {
+  .hero-collage-mask {
+    --hero-mask-y: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 14%,
+      black 86%,
+      transparent 100%
+    );
+    -webkit-mask-image: var(--hero-mask-x), var(--hero-mask-y);
+    mask-image: var(--hero-mask-x), var(--hero-mask-y);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+}
+
 /* 装飾用の縦書き。折返しが必要な長文には使わない (Safari で行高が揃わない)。
    縦組みでは行の折返し方向が横なので、nowrap を入れないと
    高さが足りないときに2列3列に割れる。 */
