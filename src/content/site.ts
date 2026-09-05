@@ -22,6 +22,12 @@ export type ArchiveItem = {
   year: string;
   imageUrl: string | null;
   videoUrl: string | null;
+  /**
+   * カードを押したときの遷移先。videoUrl より優先する。
+   * 動画が無い枠 (制作中 / 平成たち祭) を Instagram の投稿に飛ばすために使う
+   * (2026-09-05 PD 依頼)。null なら videoUrl、それも無ければリンクにしない。
+   */
+  linkUrl: string | null;
   sortOrder: number;
   /**
    * どの企画の作品か。今はハタチたちしか無いので全て "hatachitachi"。
@@ -157,6 +163,7 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "2023",
     imageUrl: null,
     videoUrl: "https://youtu.be/pkBvdMpLzx8",
+    linkUrl: null,
     sortOrder: 1,
     project: DEFAULT_PROJECT,
     inProduction: false,
@@ -167,6 +174,7 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "2024",
     imageUrl: null,
     videoUrl: "https://youtu.be/SLzwOObZcm8",
+    linkUrl: null,
     sortOrder: 2,
     project: DEFAULT_PROJECT,
     inProduction: false,
@@ -177,6 +185,7 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "2025",
     imageUrl: null,
     videoUrl: "https://youtu.be/DQTgxCvuGRY",
+    linkUrl: null,
     sortOrder: 3,
     project: DEFAULT_PROJECT,
     inProduction: false,
@@ -187,6 +196,7 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "2026",
     imageUrl: null,
     videoUrl: "https://youtu.be/RigEjrlltEM",
+    linkUrl: null,
     sortOrder: 4,
     project: DEFAULT_PROJECT,
     inProduction: false,
@@ -198,6 +208,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     year: "2027",
     imageUrl: null,
     videoUrl: null,
+    // 制作中の間は募集リールへ (2026-09-05 PD 依頼)。完成したら videoUrl を入れて linkUrl を null に
+    linkUrl: "https://www.instagram.com/reel/DcgN5EXTG3j/",
     sortOrder: 5,
     project: DEFAULT_PROJECT,
     inProduction: true,
@@ -209,6 +221,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     // 動画が無いのでサムネイルを YouTube から拾えない。集合写真を直接置く (2026-09-05)
     imageUrl: "/assets/archive-heiseitachi.webp",
     videoUrl: null,
+    // 動画が無いので Instagram の投稿へ (2026-09-05 PD 依頼)
+    linkUrl: "https://www.instagram.com/p/DcBRrQ1TYuC/",
     sortOrder: 6,
     project: DEFAULT_PROJECT,
     inProduction: false,

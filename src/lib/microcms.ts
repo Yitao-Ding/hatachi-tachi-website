@@ -80,6 +80,7 @@ type ArchiveRecord = {
   year?: string;
   image?: MicroCMSImage;
   videoUrl?: string;
+  linkUrl?: string;
   sortOrder?: number;
   /** セレクトフィールド。microCMS は単一選択でも配列で返す。 */
   project?: string[] | string;
@@ -195,6 +196,7 @@ export async function getArchiveList(): Promise<ArchiveItem[]> {
       year: c.year ?? "",
       imageUrl: c.image?.url ?? null,
       videoUrl: c.videoUrl?.trim() || null,
+      linkUrl: c.linkUrl?.trim() || null,
       sortOrder: c.sortOrder ?? i,
       // 未入力なら既定の企画とみなす。フィールドを作り忘れても表示は壊れない
       project: (Array.isArray(c.project) ? c.project[0] : c.project) || DEFAULT_PROJECT,

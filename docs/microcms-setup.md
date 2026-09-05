@@ -47,14 +47,18 @@
 | year | 開催年 | テキストフィールド | |
 | image | 画像 | 画像 | |
 | videoUrl | 動画URL | テキストフィールド | |
+| linkUrl | リンク先URL | テキストフィールド | |
 | sortOrder | 表示順 | 数値 | 必須 |
 | inProduction | 制作中 | 真偽値 | |
 | project | 企画 | セレクトフィールド | |
 
 `sortOrder` の小さい順に左上から並ぶ。`videoUrl` があるとクリックで動画に飛ぶ。
+`linkUrl` を入れると、クリック先がそちらになる (`videoUrl` より優先)。動画が無い枠を Instagram の投稿に
+飛ばすためのもので、今は ハタチたち5 (募集リール) と 平成たち祭 (投稿) に入れている。
 
-`inProduction` を ON にすると、サムネイルの代わりに枠線と「制作中」だけが出て、リンクにならない。
-ハタチたち5 が完成したら、`videoUrl` を入れて `inProduction` を OFF にする。それだけで通常の枠になる。
+`inProduction` を ON にすると、サムネイルの代わりに枠線と「制作中」だけが出る。`linkUrl` があれば
+その枠もリンクになり、Instagram の印が中に出る。
+ハタチたち5 が完成したら、`videoUrl` を入れて `linkUrl` を空にし、`inProduction` を OFF にする。それだけで通常の枠になる。
 
 `project` は選択肢に `hatachitachi` を1つ作り、既定値にしておく。今はハタチたちしか無いので出番はないが、
 後からスタジオメタリのサイトを足すときに API を作り直さずに済ませるためのフィールド。

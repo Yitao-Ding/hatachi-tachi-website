@@ -80,15 +80,24 @@ export function Hero() {
         ハタチたち｜二十歳100人でつくるダンス映像プロジェクト
       </h1>
 
-      {/* L1 レタリング。写真より先に置いて、後ろに回す */}
+      {/* L1 レタリング。写真より先に置いて、後ろに回す。
+          スマホの位置は写真の縁に合わせて算出している (2026-09-05 PD 指摘「位置をここに」)。
+          3:4 の枠で写真は top 34%、高さ 69%×9/16÷(4/3) = 29.1% → 下端 63.1%。
+          字の em は 15vw = 枠高の 11.25%。デスクトップ実測では写真が字の下 18〜25% を
+          食っているので、ここも em の 20% (2.25%) だけ写真に重ねる:
+            ハタチ top = 34 − 11.25 + 2.25 = 25%
+            たち bottom = 100 − (63.1 − 2.25 + 11.25) = 27.9%
+          左右もデスクトップと同じく写真の縁に揃える: ハタチの左端 = 写真の左端 16%、
+          たちの右端 (字面) = 写真の右端 85%。たちは 2字 + 字送り 0.16em で字面幅 33.9%W なので
+          left = 85 − 33.9 ≒ 51%。右の縦書き (right 4%) との字面の間隔は約 6%W 残る。 */}
       <p
-        className="font-mincho text-coral absolute top-[9%] left-[13%] text-[15vw] leading-[1] font-bold tracking-[0.08em] md:top-[12.8%] md:left-[15.45%] md:text-[11vw]"
+        className="font-mincho text-coral absolute top-[25%] left-[16%] text-[15vw] leading-[1] font-bold tracking-[0.08em] md:top-[12.8%] md:left-[15.45%] md:text-[11vw]"
         aria-hidden
       >
         {HERO.titleUpper}
       </p>
       <p
-        className="font-mincho text-coral absolute bottom-[9%] left-[40%] text-[15vw] leading-[1] font-bold tracking-[0.16em] md:bottom-[11.1%] md:left-[58%] md:text-[10.5vw]"
+        className="font-mincho text-coral absolute bottom-[27.9%] left-[51%] text-[15vw] leading-[1] font-bold tracking-[0.16em] md:bottom-[11.1%] md:left-[58%] md:text-[10.5vw]"
         aria-hidden
       >
         {HERO.titleLower}
