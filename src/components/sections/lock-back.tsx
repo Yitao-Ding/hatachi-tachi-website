@@ -65,7 +65,10 @@ export function LockBack({ items }: Props) {
             );
 
             const label = (
-              <p className="font-mincho mt-3 text-center text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
+              // スマホは 2カラムでカード幅が 167px しかなく、19px / 0.15em だと
+              // 「初代 ハタチたち 2023」が入りきらずに年だけ2行目に落ちていた
+              // (2026-09-05 指摘)。字送りを詰めて 15px にすると1行に収まる。
+              <p className="font-mincho mt-3 text-center text-[15px] font-bold tracking-[0.04em] md:text-[20px] md:tracking-[0.15em]">
                 {item.title}
                 {item.year && <span className="ml-2">{item.year}</span>}
               </p>

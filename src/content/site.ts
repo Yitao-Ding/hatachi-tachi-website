@@ -206,7 +206,8 @@ export const FALLBACK_ARCHIVE: ArchiveItem[] = [
     id: "heiseitachi",
     title: "平成たち祭",
     year: "",
-    imageUrl: null,
+    // 動画が無いのでサムネイルを YouTube から拾えない。集合写真を直接置く (2026-09-05)
+    imageUrl: "/assets/archive-heiseitachi.webp",
     videoUrl: null,
     sortOrder: 6,
     project: DEFAULT_PROJECT,

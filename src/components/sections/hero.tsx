@@ -95,13 +95,16 @@ export function Hero() {
       </p>
 
       {/* L2 主写真。不透明なので、重なったレタリングをここで切り落とす */}
-      <figure className="absolute top-[34%] left-[12%] w-[76%] overflow-hidden bg-[#dedad4] md:top-[28.9%] md:left-[15.45%] md:w-[69.3%]">
+      {/* スマホは写真を少し内側に寄せて、左右の縦書きとの間隔を空ける。
+          縦書きを 16.4〜18.7px に上げた結果、左の縦書きの右端と写真の左端が
+          11px しか離れておらず、写真に貼り付いて見えていた (2026-09-05 指摘)。 */}
+      <figure className="absolute top-[34%] left-[16%] w-[69%] overflow-hidden bg-[#dedad4] md:top-[28.9%] md:left-[15.45%] md:w-[69.3%]">
         <div className="relative aspect-[16/9] md:aspect-[270/100]">
           <Image
             src="/assets/hero-circle.webp"
             alt="体育館で円陣を組むハタチたちのメンバー"
             fill
-            sizes="(min-width: 768px) 70vw, 76vw"
+            sizes="(min-width: 768px) 70vw, 69vw"
             priority
             className="object-cover"
           />
@@ -110,7 +113,7 @@ export function Hero() {
 
       {/* L3 縦書き。太字にせず細い明朝で、字送りは実測の 0.15em */}
       <p
-        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 left-[5%] -translate-y-1/2 text-[4.8vw] tracking-[0.15em] md:left-[6.1%] md:text-[2.86vw]"
+        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 left-[4%] -translate-y-1/2 text-[4.8vw] tracking-[0.15em] max-md:leading-[1.15] md:left-[6.1%] md:text-[2.86vw]"
         aria-hidden
       >
         {HERO.catchVertical}
@@ -118,7 +121,7 @@ export function Hero() {
       {/* 草案では白だったが、2026-09-03 YD 判断で左の縦書きと同じ珊瑚に揃えた。
           「ここからは私たちがつくる最強セカイ」で一文なので、色が割れているほうが不自然。 */}
       <p
-        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 right-[5%] -translate-y-1/2 text-[4.2vw] tracking-[0.15em] md:right-[6.25%] md:text-[2.34vw]"
+        className="vertical-text font-mincho text-coral-on-warm absolute top-1/2 right-[4%] -translate-y-1/2 text-[4.2vw] tracking-[0.15em] max-md:leading-[1.15] md:right-[6.25%] md:text-[2.34vw]"
         aria-hidden
       >
           {HERO.leadVertical}

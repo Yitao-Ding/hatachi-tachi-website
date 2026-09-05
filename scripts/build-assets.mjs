@@ -93,6 +93,15 @@ async function main() {
     made.push(to);
   }
 
+  // LOOK BACK の平成たち祭。カードは 16:9 だが元は 4:3 なので上の天井を落として切る。
+  // anchor 0.62 で人が入っている帯 (元画像の y=240〜950 あたり) が枠の中に収まる。
+  await sharp(src("heiseitachi.jpg"))
+    .extract(cropToAspect({ left: 0, top: 0, width: 1477, height: 1108 }, 16 / 9, 0.62))
+    .resize({ width: 1200 })
+    .webp({ quality: 82 })
+    .toFile(path.join(OUT, "archive-heiseitachi.webp"));
+  made.push("archive-heiseitachi.webp");
+
   // SNS 共有用。1200×630 ちょうどに切る
   await sharp(src("IMG_0961.JPG"))
     .resize({ width: 1200, height: 630, fit: "cover", position: "attention" })
