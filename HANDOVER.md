@@ -85,7 +85,7 @@ microCMS 画像は imgix パラメータ (`src/lib/image-loader.ts`) で Vercel 
 - Tailwind: 表示切替するコンポーネントに display ユーティリティを固定で埋め込まない (`hidden` と競合する)
 - microCMS `site` はオブジェクト形式。`instagramPostUrls` はテキストエリア1行1URL
 - Webhook は 3 API 全部に登録 (`site` を忘れがち)
-- `NEXT_PUBLIC_SITE_URL` を入れるまで `robots.txt` は全面 Disallow になる (vercel.app が索引されるのを防ぐため)。本番ドメイン適用時に必ず設定する
+- `NEXT_PUBLIC_SITE_URL` は Vercel の Production に設定済み (2026-09-05)。robots.txt は Allow + sitemap。セキュリティヘッダ / CSP / Dependabot / 手動チェックリストは `docs/security.md`
 - 珊瑚 `#ff5757` に白文字は 3.11:1。半透明の白を重ねると 2.4:1 まで落ちるので、この背景の上では必ず不透明の白を使う
 - dev サーバー: `pnpm dev --port 3210`
 

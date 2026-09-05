@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getNewsDetail } from "@/lib/microcms";
+import { getNewsDetail, isCmsConfigured } from "@/lib/microcms";
 import { NewsArticle } from "@/components/news-article";
 
 /*
@@ -24,6 +24,9 @@ type Props = {
 
 export default async function NewsPreviewPage({ params, searchParams }: Props) {
   const [{ slug }, { draftKey }] = await Promise.all([params, searchParams]);
+  // CMS 未接続なら下書きは存在しない。draftKey 無しは公開記事のキャッシュされない複製を
+  // 誰でも叩ける状態になるだけなので出さない (2026-09-05 セキュリティ整備)。
+  if (!isCmsConfigured || !draftKey) notFound();
   const item = await getNewsDetail(slug, draftKey);
   if (!item) notFound();
 
