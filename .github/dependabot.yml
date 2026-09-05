@@ -1,0 +1,18 @@
+# 依存の更新を月1回まとめて PR にする。セキュリティ修正は GitHub 側の
+# "Dependabot security updates" (リポジトリ設定で ON) が随時 PR を出す。
+# PR が来たら Vercel が Preview を作るので、そこで表示を確認してから main にマージする。
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 3
+    groups:
+      all-dependencies:
+        patterns: ["*"]
+    # メジャー更新は自動 PR にしない (Next / React / TypeScript のメジャーは手で判断する)
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

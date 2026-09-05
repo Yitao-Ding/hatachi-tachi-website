@@ -22,3 +22,6 @@ next-env.d.ts
 
 # playwright artifacts
 .playwright-mcp/
+
+# serena (ローカルのコード解析設定。公開 repo に載せない)
+.serena/

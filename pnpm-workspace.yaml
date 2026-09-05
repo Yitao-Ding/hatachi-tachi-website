@@ -1,6 +1,16 @@
-# 単一パッケージ (workspace 定義は無し)。
-# pnpm 11 はビルド許可設定をこのファイルから読む。
-# sharp / unrs-resolver の native postinstall を許可しないと install/next build が失敗する。
+# 単一パッケージ (workspace 定義は無し)。pnpm 10.26+ / 11 が設定をこのファイルから読む。
+# sharp / unrs-resolver の native postinstall を許可しないと install / next build が失敗する。
 allowBuilds:
   sharp: true
   unrs-resolver: true
+
+# 公開から 7 日 (10080 分) 未満の版を pnpm add / pnpm up で取らない (乗っ取り直後の版を避ける)。
+# lockfile 固定の install (Vercel) には影響しない。急ぐ時: pnpm add <pkg> --config.minimumReleaseAge=0
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - next # セキュリティ修正版は当日入れたいので除外
+  - eslint-config-next
+
+# pnpm dev / build の前に node_modules が lockfile と一致するか確認し、ズレていたら自動 install
+# (Dependabot PR をマージして pull した直後の事故防止)
+verifyDepsBeforeRun: install
