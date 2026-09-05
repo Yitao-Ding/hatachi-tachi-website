@@ -222,13 +222,13 @@ export const FALLBACK_SITE: SiteSettings = {
   // 最新作 (ハタチたち4) を初期表示にする
   nowPlayingUrl: "https://youtu.be/RigEjrlltEM",
   nowPlayingCaption: "ハタチたち4 -「ピーターパン」優里",
-  // 先頭が大きい枠。募集投稿を主役に置き、残りは直近の投稿を新しい順に並べている
+  // 表示するのは先頭2件だけ。1件目が大きい枠 (スマホ・タブレットではこれだけ)、
+  // 2件目が 1024px 以上で右に並ぶ小さい枠。3件目以降を足しても表示されない
+  // (Instagram 埋め込みの最小幅326pxに収まらないため。理由は instagram-embed.tsx)。
+  // 2026-09-05 YD 指示で募集リールを主役にした。
   instagramPostUrls: [
-    ENTRY_POST_URL,
     "https://www.instagram.com/reel/DcgN5EXTG3j/",
-    "https://www.instagram.com/p/DcbEOT-kzeD/",
-    "https://www.instagram.com/p/DcYffPyk91t/",
-    "https://www.instagram.com/p/DcV6qWzkypO/",
+    ENTRY_POST_URL,
   ],
   instagramProfileUrl: INSTAGRAM_PROFILE_URL,
   // 応募フォームの実URLは募集投稿のQRコードの中にしか無く、まだ入手できていない。

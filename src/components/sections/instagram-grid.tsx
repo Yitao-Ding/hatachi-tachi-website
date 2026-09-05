@@ -19,17 +19,13 @@ export function InstagramGrid({ postUrls, profileUrl }: Props) {
           {postUrls.length > 0 ? (
             <InstagramEmbeds postUrls={postUrls} />
           ) : (
-            // 投稿URL未設定時も草案と同じ「大1枚 + 小4枚」の骨格を見せる
-            <div className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:gap-8">
+            // 投稿URL未設定時も実データと同じ「大1枚 + 小1枚」の骨格を見せる
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr] lg:gap-8">
               <PlaceholderImage
                 label="INSTAGRAM 投稿"
                 className="aspect-[4/5] w-full"
               />
-              <div className="grid grid-cols-2 gap-4">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <PlaceholderImage key={i} className="aspect-[3/4] w-full" />
-                ))}
-              </div>
+              <PlaceholderImage className="hidden aspect-[4/5] w-full lg:block" />
             </div>
           )}
         </div>
