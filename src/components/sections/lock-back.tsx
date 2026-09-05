@@ -65,12 +65,13 @@ export function LockBack({ items }: Props) {
             );
 
             const label = (
-              // スマホは 2カラムでカード幅が 167px しかなく、19px / 0.15em だと
-              // 「初代 ハタチたち 2023」が入りきらずに年だけ2行目に落ちていた
-              // (2026-09-05 指摘)。字送りを詰めて 15px にすると1行に収まる。
-              <p className="font-mincho mt-3 text-center text-[15px] font-bold tracking-[0.04em] md:text-[20px] md:tracking-[0.15em]">
-                {item.title}
-                {item.year && <span className="ml-2">{item.year}</span>}
+              // 「初代 ハタチたち 2023」だけ他より長く、lg 未満 (375px でカード 160px、
+              // 768px で 209px) では年だけが2行目に落ちて、隣の1行の枠と高さが揃わなかった
+              // (2026-09-05 実測)。字送りを詰めて1行に押し込む方式は 390px では入っても
+              // 375px で割れる。年は lg 未満では常に2行目に置き、lg 以上で1行に戻す。
+              <p className="font-mincho mt-3 text-center text-[16px] font-bold tracking-[0.08em] md:text-[20px] md:tracking-[0.15em]">
+                <span className="block lg:inline">{item.title}</span>
+                {item.year && <span className="block lg:ml-2 lg:inline">{item.year}</span>}
               </p>
             );
 

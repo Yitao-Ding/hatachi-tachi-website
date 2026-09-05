@@ -8,6 +8,8 @@ type Props = {
   children?: ReactNode;
   /** left: 左端から伸びて右端が斜め / right: 右端まで伸びて左端が斜め */
   side?: "left" | "right";
+  /** 見出しのレベル。トップではセクション見出し (h2)、お知らせ一覧ではページ見出し (h1) */
+  as?: "h1" | "h2";
   className?: string;
 };
 
@@ -22,6 +24,7 @@ export function SlantBand({
   id,
   children,
   side = "left",
+  as: Heading = "h2",
   className = "",
 }: Props) {
   const clipPath =
@@ -40,9 +43,9 @@ export function SlantBand({
       style={{ clipPath }}
     >
       {label && (
-        <h2 className="font-roman py-5 pl-[6vw] pr-16 text-3xl font-semibold tracking-[0.35em] text-white md:text-4xl">
+        <Heading className="font-roman py-5 pl-[6vw] pr-16 text-3xl font-semibold tracking-[0.35em] text-white md:text-4xl">
           {label}
-        </h2>
+        </Heading>
       )}
       {children}
     </div>

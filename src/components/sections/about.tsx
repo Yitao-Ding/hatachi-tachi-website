@@ -32,8 +32,9 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
             </h2>
             {/* スマホは 16px。24px ベタ指定だと NEWS 本文 (15px) の1.6倍あって、
                 サイト自身の文字サイズの基準から ABOUT だけ外れていた (2026-09-05 YD 指摘)。
-                デスクトップは Canva 草案に合わせた 24px のまま。 */}
-            <p className="font-mincho mt-8 text-[16px] leading-[2] tracking-[0.06em] md:mt-10 md:text-[24px] md:leading-[1.75] md:tracking-[0.12em]">
+                768〜1023px は本文の列が 390px しかなく、24px だと1行12字で11行に伸びるので 20px。
+                lg 以上は Canva 草案に合わせた 24px。 */}
+            <p className="font-mincho mt-8 text-[16px] leading-[2] tracking-[0.06em] md:mt-10 md:text-[20px] md:leading-[1.8] md:tracking-[0.1em] lg:text-[24px] lg:leading-[1.75] lg:tracking-[0.12em]">
               {body}
             </p>
           </div>
@@ -61,7 +62,7 @@ export function About({ body, ctaHref, ctaLabel }: Props) {
           </figure>
 
           <div>
-            <p className="font-mincho text-[16px] leading-[2] tracking-[0.06em] md:text-[24px] md:leading-[1.75] md:tracking-[0.12em]">
+            <p className="font-mincho text-[16px] leading-[2] tracking-[0.06em] md:text-[20px] md:leading-[1.8] md:tracking-[0.1em] lg:text-[24px] lg:leading-[1.75] lg:tracking-[0.12em]">
               {ABOUT_SUB}
             </p>
 

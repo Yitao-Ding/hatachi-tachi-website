@@ -3,6 +3,8 @@ import Link from "next/link";
 import { SECTION_LABELS } from "@/content/site";
 import { formatDate, toDateAttr } from "@/lib/format";
 import { getNewsList } from "@/lib/microcms";
+import { SiteFooter } from "@/components/sections/site-footer";
+import { SlantBand } from "@/components/ui/slant-band";
 
 export const revalidate = 3600;
 
@@ -17,12 +19,10 @@ export default async function NewsIndexPage() {
   const news = await getNewsList();
 
   return (
+    <>
     <main className="bg-paper">
-      <div className="bg-navy py-5 pl-[6vw]">
-        <h1 className="font-roman text-2xl font-semibold tracking-[0.35em] text-white">
-          {SECTION_LABELS.news}
-        </h1>
-      </div>
+      {/* トップ・詳細と同じ斜めカットの帯。一覧だけ四角い帯だった (2026-09-05) */}
+      <SlantBand label={SECTION_LABELS.news} as="h1" />
 
       <div className="mx-auto w-[min(880px,92vw)] py-[var(--section-pad-y)]">
         {news.length === 0 ? (
@@ -65,5 +65,7 @@ export default async function NewsIndexPage() {
         </div>
       </div>
     </main>
+    <SiteFooter />
+    </>
   );
 }

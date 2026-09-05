@@ -11,6 +11,9 @@ type Props = {
 // クリックされるまで iframe を読み込まないファサード。初期ロードから YouTube 一式を外す。
 export function YouTubeFacade({ videoId, title }: Props) {
   const [playing, setPlaying] = useState(false);
+  // デスクトップでは枠が 1000px 超になるので、480px の hqdefault だとぼやける。
+  // maxresdefault (1280px) を先に取り、無い動画 (404) だけ hqdefault に落とす。
+  const [thumb, setThumb] = useState(`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`);
 
   if (playing) {
     return (
@@ -33,10 +36,11 @@ export function YouTubeFacade({ videoId, title }: Props) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- ytimg は最適化不要の外部サムネ */}
       <img
-        src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+        src={thumb}
         alt=""
         className="h-full w-full object-cover opacity-85 transition-opacity group-hover:opacity-100"
         loading="lazy"
+        onError={() => setThumb(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`)}
       />
       <span className="bg-coral group-hover:bg-coral-on-warm absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full text-white transition-colors">
         <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor" aria-hidden>

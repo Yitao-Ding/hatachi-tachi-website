@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getNewsDetail, getNewsList } from "@/lib/microcms";
 import { NewsArticle } from "@/components/news-article";
+import { SiteFooter } from "@/components/sections/site-footer";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -42,5 +43,10 @@ export default async function NewsDetailPage({ params }: Props) {
   const item = await getNewsDetail(slug);
   if (!item) notFound();
 
-  return <NewsArticle item={item} />;
+  return (
+    <>
+      <NewsArticle item={item} />
+      <SiteFooter />
+    </>
+  );
 }

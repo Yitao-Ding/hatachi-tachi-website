@@ -30,13 +30,16 @@ export function Footer({
   present,
   year,
 }: Props) {
+  // "/#news" にしているのは、このフッターがお知らせ一覧・詳細にも出るため。
+  // "#news" だとサブページ上では同じページ内を探して何も起きない。
+  // トップ上では "/#news" もフラグメント移動として扱われるのでリロードは起きない。
   const nav = [
-    ...(present.news ? [{ href: "#news", label: SECTION_LABELS.news }] : []),
-    { href: "#about", label: SECTION_LABELS.about },
-    { href: "#now-playing", label: SECTION_LABELS.nowPlaying },
-    ...(present.archive ? [{ href: "#archive", label: SECTION_LABELS.archive }] : []),
-    { href: "#instagram", label: SECTION_LABELS.instagram },
-    ...(present.outline ? [{ href: "#outline", label: "OUTLINE" }] : []),
+    ...(present.news ? [{ href: "/#news", label: SECTION_LABELS.news }] : []),
+    { href: "/#about", label: SECTION_LABELS.about },
+    { href: "/#now-playing", label: SECTION_LABELS.nowPlaying },
+    ...(present.archive ? [{ href: "/#archive", label: SECTION_LABELS.archive }] : []),
+    { href: "/#instagram", label: SECTION_LABELS.instagram },
+    ...(present.outline ? [{ href: "/#outline", label: "OUTLINE" }] : []),
   ];
 
   return (
@@ -48,12 +51,14 @@ export function Footer({
           </p>
 
           <nav aria-label="サイト内" className="mt-8">
-            <ul className="flex flex-wrap gap-x-8 gap-y-3 text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
+            {/* リンクの縦のタップ領域は文字の行高だけだと 27〜29px しかない (2026-09-05 実測)。
+                py-1.5 で 48px にする。行間は gap-y を減らして見た目の間隔を保つ */}
+            <ul className="flex flex-wrap gap-x-8 gap-y-0 text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="focus-visible:outline-paper transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+                    className="focus-visible:outline-paper inline-block py-1.5 transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
                   >
                     {item.label}
                   </a>
@@ -63,14 +68,14 @@ export function Footer({
           </nav>
 
           {(instagramProfileUrl || entryFormUrl) && (
-            <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
+            <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-0 text-[19px] font-bold tracking-[0.15em] md:text-[20px]">
               {instagramProfileUrl && (
                 <li>
                   <a
                     href={instagramProfileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="focus-visible:outline-paper underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+                    className="focus-visible:outline-paper inline-block py-1.5 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
                   >
                     公式Instagram
                   </a>
@@ -82,7 +87,7 @@ export function Footer({
                     href={entryFormUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="focus-visible:outline-paper underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+                    className="focus-visible:outline-paper inline-block py-1.5 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
                   >
                     ダンサー応募
                   </a>
