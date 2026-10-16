@@ -1,4 +1,4 @@
-import { SECTION_LABELS } from "@/content/site";
+import { SECTION_LABELS, STUDIO_METALI } from "@/content/site";
 
 type Props = {
   contactEmail: string | null;
@@ -117,6 +117,19 @@ export function Footer({
           )}
           <p className="text-ink-muted">
             © {year} {organizerName || "ハタチたち"}
+            {/* 企画元のサイトへ。関係のあるサイト同士のリンクは検索での評価にも効く (2026-10-16) */}
+            <span aria-hidden="true" className="mx-2">
+              /
+            </span>
+            Produced by{" "}
+            <a
+              href={STUDIO_METALI.url}
+              target="_blank"
+              rel="noopener"
+              className="text-navy underline underline-offset-4"
+            >
+              {STUDIO_METALI.name}
+            </a>
           </p>
         </div>
       </div>
