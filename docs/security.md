@@ -54,7 +54,7 @@ Report-Only を本当のブロック (enforce) に切り替えるのは、`Conte
 
 優先順:
 
-1. **お名前.com のドメイン情報認証メール (期限 2026-09-17)**。save.yitao@gmail.com に `verification-noreply@onamae.com` から「【重要】[お名前.com] ドメイン情報認証のお願い」が来ている (迷惑メールも確認)。リンクを踏まないと hatachitachi.com と studiometali.com が両方停止し、サイトが落ちる
+1. **お名前.com のドメイン情報認証メール (期限 2026-09-17)**。お名前.com の登録メール (YD の Gmail) に `verification-noreply@onamae.com` から「【重要】[お名前.com] ドメイン情報認証のお願い」が来ている (迷惑メールも確認)。リンクを踏まないと hatachitachi.com と studiometali.com が両方停止し、サイトが落ちる
 2. お名前.com Navi: 移管ロック (ドメイン移管ロック) を ON、2段階認証を ON。どちらも無料。DNSSEC とドメインプロテクションは有料 (月110円 / 年1,078円) なので入れない
 3. GitHub / Cloudflare / お名前.com に紐づく Gmail の2段階認証を、SMS ではなく認証アプリかパスキーにする。リカバリーコードを保管
 4. 外形監視 (任意、無料): UptimeRobot 等に https://hatachitachi.com を5分間隔で登録すると、落ちた時にメールが来る

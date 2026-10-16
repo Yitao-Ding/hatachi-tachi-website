@@ -31,6 +31,8 @@ export function SiteJsonLd({ description }: { description: string }) {
             "@id": `${SITE_URL}/#website`,
             url,
             name: "ハタチたち",
+            // ひらがなで探す人向けの別名
+            alternateName: ["はたちたち"],
             inLanguage: "ja",
             publisher: { "@id": ORG_ID },
           },
@@ -38,6 +40,7 @@ export function SiteJsonLd({ description }: { description: string }) {
             "@type": "Organization",
             "@id": ORG_ID,
             name: "ハタチたち",
+            alternateName: ["はたちたち"],
             url,
             logo: `${SITE_URL}/icon.svg`,
             image: `${SITE_URL}/assets/ogp.jpg`,
