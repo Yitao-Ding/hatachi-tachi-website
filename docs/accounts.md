@@ -12,11 +12,17 @@
 | サービス | 用途 | 方針 | 現状 |
 |---|---|---|---|
 | microCMS | 記事・アーカイブの更新 | PD 個人アカウント。無料枠は 1サービス / API 5本 / メンバー3人 | 未作成 |
-| GitHub | ソースコード | PD 個人アカウント | ローカルのみ (未 push) |
-| Cloudflare | DNS とホスティング (2026-10-16 から) | YD のアカウント (studiometali.com と同じ)。ゾーン `hatachitachi.com`、Worker `hatachitachi` | 移行中 (`docs/domain-setup.md`) |
-| Vercel | 旧ホスティング | yitao-ding アカウントのプロジェクト `hatachi-tachi-website` | Cloudflare 移行後は使わない。削除は YD 判断 |
-| ドメインレジストラ | 独自ドメイン | お名前.com (アカウントIDは公開リポジトリに書かない) | ✅ 2026-09-03 取得 (hatachitachi.com / studiometali.com) |
+| GitHub | ソースコード | YD のアカウント (2026-10-16 YD 判断、下の「名義について」) | `Yitao-Ding/hatachi-tachi-website` |
+| Cloudflare | DNS とホスティング (2026-10-16 から) | YD のアカウント (studiometali.com と同じ)。ゾーン `hatachitachi.com`、Worker `hatachitachi` | 移行済み (`docs/domain-setup.md`) |
+| Vercel | 旧ホスティング | yitao-ding アカウントのプロジェクト `hatachi-tachi-website` | Cloudflare 移行後は使わない。Hobby プランは商用利用不可なので削除する (`docs/domain-setup.md` の 7) |
+| ドメインレジストラ | 独自ドメイン | お名前.com の Metalina のアカウント (アカウントIDは公開リポジトリに書かない。登録メールは YD の Gmail なので、認証・更新の連絡は YD に届く) | ✅ 2026-09-03 取得 (hatachitachi.com / studiometali.com) |
 | 問い合わせメール | サイト公開用の窓口 | 独自ドメインのアドレス。受信転送だけなら Cloudflare Email Routing で無料 | 未決定 |
+
+## 名義について (2026-10-16)
+
+ドメインは Metalina のお名前.com アカウントにあり、看板の持ち主は本人。DNS と配信 (Cloudflare) とソースコード (GitHub) は、制作・運用を代行している YD のアカウントに置いている。
+法律・検索順位・広告の出稿には影響しない。困るのは、DNS を触る作業 (Search Console の所有確認、Meta のドメイン認証、独自ドメインのメール) とサイトの変更に YD の手が要ることだけ。
+本人のアカウントに移す手順は studiometali-website の `docs/accounts.md` と同じ (リポジトリを譲渡 → 本人の Cloudflare で `docs/domain-setup.md` をやり直す → YD 側のゾーンと Worker を削除)。
 
 ## ⚠️ 期限のあるもの
 
