@@ -9,8 +9,7 @@ import { Outline } from "@/components/sections/outline";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { getArchiveList, getNewsList, getSiteSettings } from "@/lib/microcms";
 
-// SSG + microCMS Webhook 再ビルドが基本。revalidate は Webhook が落ちた時の保険。
-export const revalidate = 3600;
+// 静的書き出し (output: "export")。内容を変えたら push で作り直す (再生成の仕組みは無い)。
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

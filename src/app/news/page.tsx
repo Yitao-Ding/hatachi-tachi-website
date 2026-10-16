@@ -6,8 +6,6 @@ import { getNewsList } from "@/lib/microcms";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { SlantBand } from "@/components/ui/slant-band";
 
-export const revalidate = 3600;
-
 export const metadata: Metadata = {
   title: "お知らせ",
   alternates: { canonical: "/news" },
