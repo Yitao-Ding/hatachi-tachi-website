@@ -2,6 +2,14 @@
 
 最終更新: 2026-08-28 (初回構築 + 全面レビュー反映)
 
+## 2026-10-16: Cloudflare 移行と検索対策
+
+- 配信を Vercel から Cloudflare Workers の静的アセットに移す。`output: "export"` で `out/` に静的書き出し、`wrangler.jsonc` が配る。セキュリティヘッダは `public/_headers`
+- サーバーが要る機能を外した: `revalidate` (ISR) と microCMS の下書きプレビュー (`/preview/news/…`)。microCMS は 2026-09-05 に不使用と決めていて、表示は全て `site.ts` のフォールバック。下の「全体設計」の microCMS → Webhook → Vercel 再ビルドの流れは今は使っていない
+- 移行の手順 (Vercel 向けレコードの消し方と止まる時間を含む) は `docs/domain-setup.md`、検索対策は `docs/seo.md`
+- 本番と同じ配信の確認は `pnpm preview` (`next build` の後に `wrangler dev`)。`next start` は静的書き出しでは使えないので scripts から外した
+- 移行前の main と移行後のビルドを Playwright で撮って比べ、PC (1440) / スマホ (390) とも画素差 0
+
 ## 現状
 
 Canva 草案 (DAHTaN6Dxr8「ハタチたち - Webサイト」1ページ7セクション) を

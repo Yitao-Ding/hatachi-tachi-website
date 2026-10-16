@@ -107,6 +107,9 @@ export const FEATURED_NEWS_LEAD =
 export const ENTRY_POST_URL = "https://www.instagram.com/p/Dbf2tjXEwDj/";
 export const INSTAGRAM_PROFILE_URL = "https://www.instagram.com/hatachi_tachi/";
 
+// ハタチたちを企画しているスタジオメタリ (PD の Metalina の屋号) の公式サイト。フッターからリンクする
+export const STUDIO_METALI = { name: "スタジオメタリ", url: "https://studiometali.com/" } as const;
+
 const ext = (href: string, text: string) =>
   `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
 

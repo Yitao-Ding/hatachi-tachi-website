@@ -1,0 +1,22 @@
+// Cloudflare Workers の設定。スクリプトは無く、`next build` が書き出した out/ を静的アセットとして配るだけ。
+// 静的アセットへのリクエストは無料・無制限。
+// Cloudflare の Workers Builds が GitHub の main への push で `pnpm build` → `npx wrangler deploy` を走らせる。
+// main 以外のブランチと PR は `npx wrangler versions upload` でプレビュー URL が出る (本番には出ない)。
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hatachitachi",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    // 存在しないパスは out/404.html (src/app/not-found.tsx) を 404 で返す
+    "not_found_handling": "404-page"
+  },
+  // hatachitachi.com と www を Workers の Custom Domain として付ける。DNS レコードと証明書は Cloudflare が作る。
+  // ゾーン (hatachitachi.com) が同じ Cloudflare アカウントで Active で、かつ同じホスト名の A / CNAME が
+  // 残っていない (Vercel 向けのレコードを消してある) 時だけ deploy が通る。手順は docs/domain-setup.md
+  // www から apex への 301 はゾーンの Redirect Rule で行う
+  "routes": [
+    { "pattern": "hatachitachi.com", "custom_domain": true },
+    { "pattern": "www.hatachitachi.com", "custom_domain": true }
+  ]
+}

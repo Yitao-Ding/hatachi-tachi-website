@@ -1,11 +1,11 @@
 # セキュリティと運用の手引き
 
-2026-09-05 に整備。このサイトは静的生成 (SSG) で、フォームもログインもユーザー入力も無い。
-守るべきものは「公式ドメイン上で他人のスクリプトが動かないこと」「アカウント (GitHub / Vercel / お名前.com / Gmail) が乗っ取られないこと」「ドメインが止まらないこと」の3つ。
+2026-09-05 に整備、2026-10-16 に Cloudflare 移行に合わせて直した。このサイトは静的書き出し (`output: "export"`) で、サーバー側のコードもフォームもログインも無い。
+守るべきものは「公式ドメイン上で他人のスクリプトが動かないこと」「アカウント (GitHub / Cloudflare / お名前.com / Gmail) が乗っ取られないこと」「ドメインが止まらないこと」の3つ。
 
 ## 入っている対策 (コード側、git に残る)
 
-`next.config.ts` の `headers()` で全ページに付けているヘッダ:
+`public/_headers` で全ページに付けているヘッダ (Cloudflare Workers の静的アセットが読む。next.config の headers() は静的書き出しでは使えない):
 
 | ヘッダ | 値 | 目的 |
 |---|---|---|
@@ -17,7 +17,7 @@
 | X-Frame-Options | DENY | 古いブラウザ向けの frame-ancestors |
 | Cross-Origin-Opener-Policy | same-origin | 別タブで開いたページから window を触られない |
 
-そのほか: `x-powered-by` を消した (`poweredByHeader: false`)。`hatachi-tachi-website.vercel.app` は `https://hatachitachi.com` へ 308 でまとめている。`/preview/news/…` は microCMS 未接続の間は 404 (下書きプレビュー専用)。`NEXT_PUBLIC_SITE_URL` を Vercel の Production 環境変数に設定済み (canonical / sitemap / OGP の URL が揺れないように)。
+そのほか: `/_next/static/*` はファイル名にハッシュが入るので 1 年キャッシュ (immutable)。microCMS の下書きプレビュー (`/preview/news/…`) は、サーバーが無いと動かないので 2026-10-16 に削除した (microCMS は 2026-09-05 に不使用と決めている)。canonical / sitemap / OGP の URL は `src/lib/site-url.ts` で https://hatachitachi.com に固定。
 
 ### CSP の見方
 
@@ -25,20 +25,20 @@ Report-Only は「許可リストに無い通信があったら Console に書�
 確認は Chrome で https://hatachitachi.com を開き、右クリック → 検証 → Console。INSTAGRAM までスクロールし、NOW PLAYING の再生ボタンを押してから、`[Report Only] Refused to` で始まる行が無ければ問題なし。
 Instagram / YouTube の iframe 内部が出す警告 (発生元が www.instagram.com や youtube-nocookie.com のもの) は対象外なので無視してよい。
 
-違反が出た時は `next.config.ts` の `cspReportOnly` に足す:
+違反が出た時は `public/_headers` の Content-Security-Policy-Report-Only の行に足す:
 
 - `Refused to load the image 'https://www.instagram.com/…'` → img-src に `https://www.instagram.com`
 - `Refused to connect to 'https://graph.instagram.com/…'` → connect-src に `https://graph.instagram.com`
 - `Refused to frame 'https://www.youtube.com/…'` → 埋め込み方式を変えた時。frame-src に追加
 - `Refused to load the image 'https://<microCMS以外>/…'` → お知らせ本文に外部画像を貼った時。microCMS にアップロードし直す
 
-Report-Only を本当のブロック (enforce) に切り替えるのは、`Content-Security-Policy-Report-Only` の key を `Content-Security-Policy` に書き換えて `cspEnforce` を消すだけ。ただし切り替えると、Instagram や YouTube が仕様を変えた時に埋め込みが無言で消える。「サイトを更新するたびに Console を見る」と決められる場合だけ切り替える。
+Report-Only を本当のブロック (enforce) に切り替えるのは、`Content-Security-Policy-Report-Only` を `Content-Security-Policy` に書き換えて、上の行の enforce 分と1本にまとめるだけ。ただし切り替えると、Instagram や YouTube が仕様を変えた時に埋め込みが無言で消える。「サイトを更新するたびに Console を見る」と決められる場合だけ切り替える。
 
 ## 依存パッケージの更新
 
 - GitHub の Dependabot アラートとセキュリティ更新を ON にした。脆弱性が公開されると自動で PR が来る
 - `.github/dependabot.yml` で月1回、通常の更新もまとめて PR が来る (メジャー更新は来ない。Next / React の大型更新は手で判断)
-- PR が来たら、PR ページ下の Vercel の Preview リンクを開いてトップと /news を確認 → 問題なければ Merge。手元では `git pull` 後に `pnpm install` (忘れても `pnpm dev` 時に自動で走る設定にしてある)
+- PR が来たら、PR の Checks にある Cloudflare Workers Builds のプレビュー URL を開いてトップと /news を確認 → 問題なければ Merge。手元では `git pull` 後に `pnpm install` (忘れても `pnpm dev` 時に自動で走る設定にしてある)
 - `pnpm-workspace.yaml` の `minimumReleaseAge: 10080` で、公開から7日未満の版は `pnpm add` で取れない (乗っ取り直後の版を避ける)。急ぐ時は `pnpm add <pkg> --config.minimumReleaseAge=0`
 - 手で確認したい時: `pnpm audit --prod`
 
@@ -56,14 +56,13 @@ Report-Only を本当のブロック (enforce) に切り替えるのは、`Conte
 
 1. **お名前.com のドメイン情報認証メール (期限 2026-09-17)**。save.yitao@gmail.com に `verification-noreply@onamae.com` から「【重要】[お名前.com] ドメイン情報認証のお願い」が来ている (迷惑メールも確認)。リンクを踏まないと hatachitachi.com と studiometali.com が両方停止し、サイトが落ちる
 2. お名前.com Navi: 移管ロック (ドメイン移管ロック) を ON、2段階認証を ON。どちらも無料。DNSSEC とドメインプロテクションは有料 (月110円 / 年1,078円) なので入れない
-3. GitHub / Vercel / お名前.com に紐づく Gmail の2段階認証を、SMS ではなく認証アプリかパスキーにする。リカバリーコードを保管
-4. Vercel Hobby は「非商用・個人利用」限定。参加費の徴収・協賛ロゴ・物販をサイトに載せるなら、Vercel Support に非商用かを確認するか Pro ($20/月) を検討する
-5. 外形監視 (任意、無料): UptimeRobot 等に https://hatachitachi.com を5分間隔で登録すると、落ちた時にメールが来る。Vercel Hobby には監視も通知も無く、ログも1時間で消える
-6. 素材の原本 (`~/Downloads/ハタチたちhp/`) を恒久フォルダに移してバックアップ対象に入れる。git に入っているのは WebP 変換後だけ
+3. GitHub / Cloudflare / お名前.com に紐づく Gmail の2段階認証を、SMS ではなく認証アプリかパスキーにする。リカバリーコードを保管
+4. 外形監視 (任意、無料): UptimeRobot 等に https://hatachitachi.com を5分間隔で登録すると、落ちた時にメールが来る
+5. 素材の原本 (`~/Downloads/ハタチたちhp/`) を恒久フォルダに移してバックアップ対象に入れる。git に入っているのは WebP 変換後だけ
 
 ## 改ざん・事故のときの戻し方
 
-1. Vercel → Deployments → 直前の正常なデプロイの「⋯」→ Instant Rollback (数秒で戻る)
+1. Cloudflare ダッシュボード → Workers & Pages → hatachitachi → Deployments → 直前の正常なバージョンの「⋯」→ Rollback (数秒で戻る)
 2. その後、原因のコミットを `git revert <sha>` して push
 3. アカウント乗っ取りが疑われる時は、先にパスワード変更と2段階認証の再設定、次に GitHub の Settings → Applications で見知らぬ連携を外す
 
@@ -71,6 +70,6 @@ Report-Only を本当のブロック (enforce) に切り替えるのは、`Conte
 
 - CSP の nonce 方式: 全ページを動的レンダリングにする必要があり、CDN キャッシュが効かなくなる。静的サイトの利点を捨てるほどの脅威が無い
 - HSTS の includeSubDomains / preload: サブドメインを http で使う可能性を潰す不可逆の設定。今は不要
-- CAA レコード: Vercel が証明書の CA を変えると更新に失敗して HTTPS が止まる副作用がある
+- CAA レコード: Cloudflare が証明書の CA を切り替えた時に更新が止まる副作用がある
 - 検索避け (robots Disallow): 独自ドメインが本番になった時点で解除済み。公式サイトなので索引される方が正しい
-- CI (GitHub Actions): Vercel が失敗ビルドを本番に出さないので、運用者1人の今は入れない。Dependabot PR の判定は Vercel の Preview で足りる
+- CI (GitHub Actions): Workers Builds はビルドが失敗したら本番に出さないので、運用者1人の今は入れない。Dependabot PR の判定はプレビュー URL で足りる

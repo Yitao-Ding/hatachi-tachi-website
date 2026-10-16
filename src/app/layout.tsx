@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Noto_Sans_JP, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site-url";
+import { SiteJsonLd } from "@/components/json-ld";
 
 // 日本語フォントは preload しない。Google Fonts の日本語は unicode-range で
 // 100以上のチャンクに分割されており、preload を有効にすると head に
@@ -32,13 +33,21 @@ const cormorant = Cormorant_Garamond({
 });
 
 const TITLE = "ハタチたち | 二十歳100人でつくるダンス映像プロジェクト";
+// 検索結果に出る文。「成人式 ダンス 映像」などで探す人に届くよう、上映先 (site.ts の FEATURED_NEWS_LEAD にある事実) を入れる。
+// Google は 80〜120 字で切るので、要点を前半に置く
 const DESCRIPTION =
-  "ハタチたちは、その年の二十歳100人でつくるダンス映像プロジェクト。ダンサー、撮影、運営、デザインまで全て二十歳だけで行い、毎年つくる代が入れ替わります。";
+  "ハタチたちは、その年の二十歳100人でつくるダンス映像プロジェクト。ダンサー、撮影、運営、デザインまで全て二十歳だけで行い、完成した映像は川崎市・相模原市・福島市のはたちのつどい（成人式）とYouTubeで上映されます。";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: TITLE, template: "%s | ハタチたち" },
   description: DESCRIPTION,
+  // 検索結果で写真を大きく出してよい、説明文の長さも制限しない (Google 向け)
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   // canonical はページごとに指定する。ここで "/" を固定すると全ページがトップを指す。
   openGraph: {
     title: TITLE,
@@ -74,7 +83,10 @@ export default function RootLayout({
       lang="ja"
       className={`${shippori.variable} ${notoJp.variable} ${cormorant.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SiteJsonLd description={DESCRIPTION} />
+        {children}
+      </body>
     </html>
   );
 }

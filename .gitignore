@@ -25,3 +25,6 @@ next-env.d.ts
 
 # serena (ローカルのコード解析設定。公開 repo に載せない)
 .serena/
+
+# cloudflare wrangler のローカル作業領域
+.wrangler/

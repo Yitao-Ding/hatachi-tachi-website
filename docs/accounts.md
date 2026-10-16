@@ -13,7 +13,8 @@
 |---|---|---|---|
 | microCMS | 記事・アーカイブの更新 | PD 個人アカウント。無料枠は 1サービス / API 5本 / メンバー3人 | 未作成 |
 | GitHub | ソースコード | PD 個人アカウント | ローカルのみ (未 push) |
-| Vercel | ホスティング | PD 個人アカウント。2ドメインを同一プロジェクトに割当 | 未作成 |
+| Cloudflare | DNS とホスティング (2026-10-16 から) | YD のアカウント (studiometali.com と同じ)。ゾーン `hatachitachi.com`、Worker `hatachitachi` | 移行中 (`docs/domain-setup.md`) |
+| Vercel | 旧ホスティング | yitao-ding アカウントのプロジェクト `hatachi-tachi-website` | Cloudflare 移行後は使わない。削除は YD 判断 |
 | ドメインレジストラ | 独自ドメイン | お名前.com (アカウントIDは公開リポジトリに書かない) | ✅ 2026-09-03 取得 (hatachitachi.com / studiometali.com) |
 | 問い合わせメール | サイト公開用の窓口 | 独自ドメインのアドレス。受信転送だけなら Cloudflare Email Routing で無料 | 未決定 |
 
