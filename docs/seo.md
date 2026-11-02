@@ -40,7 +40,7 @@ Cloudflare への移行 (`docs/domain-setup.md`) が終わった後に。手順�
 
 1. Google Search Console に「ドメイン」プロパティで hatachitachi.com を登録 (Cloudflare で自動確認)
 2. サイトマップ `https://hatachitachi.com/sitemap.xml` を送信、トップと `/news/hatachitachi-5` のインデックス登録をリクエスト
-3. Bing Webmaster Tools に Search Console から取り込み
+3. Bing Webmaster Tools に Search Console から取り込み (2026-11-02 時点で未登録。代わりに IndexNow を入れた: `public/<キー>.txt` と `scripts/indexnow.mjs`。内容を変えて公開したら `node scripts/indexnow.mjs` で Bing などに知らせる)
 4. Cloudflare の hatachitachi.com で Crawler Hints を ON
 5. 公式 Instagram (@hatachi_tachi) のプロフィールのリンクを https://hatachitachi.com に
 
