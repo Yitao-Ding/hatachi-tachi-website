@@ -102,9 +102,16 @@ export const FALLBACK_ABOUT_BODY = [
   "なんだってできると実感して欲しいとハタチのみで作りあげるイベント",
 ].join("\n");
 
-/** NEWS トップに出すリード文 (草案の本文3行)。 */
+/**
+ * NEWS トップに出すリード文。募集が 9/30 で終わったので、制作中の告知にして
+ * 公式Instagramへ流す (2026-11-02 YD 指示)。上映先は草案の本文のまま。
+ */
 export const FEATURED_NEWS_LEAD =
-  "川崎市・相模原市・福島市のはたちのつどい、そしてYOUTUBEにて上映される、二十歳100人でつくるダンス映像『ハタチたち5』。一生に一度の記念に、ぜひご応募ください！";
+  "川崎市・相模原市・福島市のはたちのつどい、そしてYOUTUBEにて上映される、二十歳100人でつくるダンス映像『ハタチたち5』。ダンサー募集は締め切り、いま制作の真っ最中です。練習や撮影の様子は公式Instagramで発信しています！";
+
+/** 募集のお知らせ (終了済み) の記事ページの説明文。 */
+const ENTRY_NEWS_LEAD =
+  "二十歳100人でつくるダンス映像『ハタチたち5』のダンサー募集のお知らせ。募集は2026年9月30日（水）で終了しました。";
 
 /** 募集告知の元になっている公式Instagramの投稿 (2026-08-01)。 */
 export const ENTRY_POST_URL = "https://www.instagram.com/p/Dbf2tjXEwDj/";
@@ -123,6 +130,7 @@ const ext = (href: string, text: string) =>
  * microCMS に news を作ったらこの内容は表示されなくなる (フォールバックのため)。
  */
 const HATACHITACHI5_BODY = [
+  `<p><strong>募集は2026年9月30日（水）で終了しました。</strong>制作の様子は${ext(INSTAGRAM_PROFILE_URL, "公式Instagram")}で発信しています。</p>`,
   "<p>その年に二十歳を迎える100人でつくるダンス映像プロジェクト「ハタチたち」。",
   "5作目となる『ハタチたち5』のダンサーを募集しています。</p>",
   "<p>ダンス歴は問いません。ブランクがあっても大丈夫です。",
@@ -149,11 +157,21 @@ const HATACHITACHI5_BODY = [
 ].join("\n");
 
 export const FALLBACK_NEWS: NewsItem[] = [
+  // トップの NEWS は記事ページを作らず、ボタンから公式Instagramへ直接飛ばす
+  {
+    id: "hatachitachi-5-now",
+    title: "ハタチたち5 & 絶賛実施中！",
+    publishedDate: "2026-11-02",
+    lead: FEATURED_NEWS_LEAD,
+    thumbnailUrl: "/assets/hero-bg-4.webp",
+    body: "",
+    externalUrl: INSTAGRAM_PROFILE_URL,
+  },
   {
     id: "hatachitachi-5",
-    title: "ハタチたち5 開催決定！ & ダンサー募集中！",
+    title: "ハタチたち5 ダンサー募集（受付終了）",
     publishedDate: "2026-08-01",
-    lead: FEATURED_NEWS_LEAD,
+    lead: ENTRY_NEWS_LEAD,
     thumbnailUrl: "/assets/news-hatachitachi5.webp",
     body: HATACHITACHI5_BODY,
     externalUrl: null,

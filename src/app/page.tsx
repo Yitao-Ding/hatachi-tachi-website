@@ -26,7 +26,7 @@ export default async function Home() {
     <>
       <main>
         <Hero />
-        <NewsSection items={news} />
+        <NewsSection items={news} ctaLabel="詳しくはInstagramへ" />
         <About
           body={site.aboutBody}
           ctaHref={site.entryFormUrl}
