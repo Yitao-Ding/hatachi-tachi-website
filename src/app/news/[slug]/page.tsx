@@ -14,7 +14,8 @@ type Props = {
 
 export async function generateStaticParams() {
   const news = await getNewsList();
-  return news.map((n) => ({ slug: n.id }));
+  // 外部リンクのお知らせは記事ページを作らない (一覧とトップから外部へ直接飛ぶ)
+  return news.filter((n) => !n.externalUrl).map((n) => ({ slug: n.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

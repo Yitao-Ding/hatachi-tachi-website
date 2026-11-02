@@ -10,7 +10,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/news`, changeFrequency: "weekly", priority: 0.8 },
-    ...news.map((n) => ({
+    // 外部リンクのお知らせ (Instagram へ飛ばすもの) は記事ページが無い
+    ...news.filter((n) => !n.externalUrl).map((n) => ({
       url: `${SITE_URL}/news/${n.id}`,
       changeFrequency: "monthly" as const,
       priority: 0.6,
